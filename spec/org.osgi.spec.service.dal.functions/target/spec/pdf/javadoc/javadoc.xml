@@ -1,0 +1,2336 @@
+<?xml version='1.0' encoding='utf-8'?>
+<top>
+  <package name='org.osgi.service.dal.functions' fqn='org.osgi.service.dal.functions' qn='org.osgi.service.dal.functions'>
+<org.osgi.annotation.versioning.Version><value>1.0</value>
+</org.osgi.annotation.versioning.Version>
+   <lead>
+Device Abstraction Layer Functions Package 1.0.
+   </lead>
+   <description>
+Device Abstraction Layer Functions Package 1.0.
+ 
+ <p>
+ Bundles wishing to use this package must list the package in the
+ Import-Package header of the bundle's manifest. This package has two types of
+ users: the consumers that use the API in this package and the providers that
+ implement the API in this package.
+ 
+ </p><p>
+ Example import for consumers using the API in this package:
+ </p><p>
+ {@code  Import-Package: org.osgi.service.dal.functions; version="[1.0,2.0)"}
+ </p><p>
+ Example import for providers implementing the API in this package:
+ </p><p>
+ {@code  Import-Package: org.osgi.service.dal.functions; version="[1.0,1.1)"}</p>
+   </description>
+<author>@author $Id: 6b601e2a31e6aaccd3ca003c70054b3ad21d13a0 $</author>
+  <class name='Alarm' fqn='org.osgi.service.dal.functions.Alarm' qn='Alarm' package='org.osgi.service.dal.functions' typeParam='' modifiers='public abstract' superclass='Function' interface='yes' kind='INTERFACE'>
+   <lead>
+{@code Alarm} function provides alarm sensor support.
+   </lead>
+   <description>
+{@code Alarm} function provides alarm sensor support. There is only one
+ eventable property and no operations.
+   </description>
+<a href='#AlarmData'>AlarmData</a>
+<implements name='Function' fqn='org.osgi.service.dal.Function' qn='Function' package='org.osgi.service.dal' local='org.osgi.service.dal.functions.Alarm'/>
+    <field name='PROPERTY_ALARM' fqn='org.osgi.service.dal.functions.Alarm.PROPERTY_ALARM' qn='Alarm.PROPERTY_ALARM' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"alarm"'>
+   <lead>
+Specifies the alarm property name.
+   </lead>
+   <description>
+Specifies the alarm property name. The property is eventable.
+   </description>
+<a href='#AlarmData'>AlarmData</a>
+     </field>
+  </class>
+  <class name='BooleanControl' fqn='org.osgi.service.dal.functions.BooleanControl' qn='BooleanControl' package='org.osgi.service.dal.functions' typeParam='' modifiers='public abstract' superclass='Function' interface='yes' kind='INTERFACE'>
+   <lead>
+{@code BooleanControl} function provides a boolean control support.
+   </lead>
+   <description>
+{@code BooleanControl} function provides a boolean control support. The
+ eventable function state is accessible with {@link #getData()} getter and
+ {@link #setData(boolean)} setter. The state can be reversed with
+ {@link #inverse()} method, can be set to {@code true} value with
+ {@link #setTrue()} method and can be set to {@code false} value with
+ {@link #setFalse()} method.
+ <p>
+ The control type can be:
+ </p><ul>
+ <li>{@link Types#LIGHT}</li>
+ <li>{@link Types#DOOR}</li>
+ <li>{@link Types#WINDOW}</li>
+ <li>{@link Types#POWER}</li>
+ <li>other type defined in {@link Types}</li>
+ <li>custom - vendor specific type</li>
+ </ul>
+   </description>
+<a href='#BooleanData'>BooleanData</a>
+<implements name='Function' fqn='org.osgi.service.dal.Function' qn='Function' package='org.osgi.service.dal' local='org.osgi.service.dal.functions.BooleanControl'/>
+    <method name='getData' fqn='org.osgi.service.dal.functions.BooleanControl.getData' qn='BooleanControl.getData()' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='BooleanData' qualifiedTypeName='org.osgi.service.dal.functions.data.BooleanData' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns the current state of {@code BooleanControl}.
+   </lead>
+   <description>
+Returns the current state of {@code BooleanControl}. It's a getter method
+ for {@link #PROPERTY_DATA} property.
+   </description>
+
+
+<return>The current state of {@code BooleanControl}.</return>
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+
+<a href='#BooleanData'>BooleanData</a><a href='#BooleanControl.PROPERTY_DATA'>BooleanControl.PROPERTY_DATA</a>
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <method name='setData' fqn='org.osgi.service.dal.functions.BooleanControl.setData' qn='BooleanControl.setData(boolean)' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='void' qualifiedTypeName='void' typeArgs='' dimension='' signature='(boolean)' flatSignature='(boolean)'>
+   <lead>
+Sets the {@code BooleanControl} state to the specified value.
+   </lead>
+   <description>
+Sets the {@code BooleanControl} state to the specified value. It's setter
+ method for {@link #PROPERTY_DATA} property.
+   </description>
+
+<param name='data'>The new function value.</param>
+
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+<throws name='IllegalArgumentException'>If there is an invalid argument.</throws>
+
+<a href='#BooleanControl.PROPERTY_DATA'>BooleanControl.PROPERTY_DATA</a>
+    <parameter name='data' dimension='' typeName='boolean' fqn='boolean' varargs='false'/>
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <method name='inverse' fqn='org.osgi.service.dal.functions.BooleanControl.inverse' qn='BooleanControl.inverse()' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='void' qualifiedTypeName='void' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Reverses the {@code BooleanControl} state.
+   </lead>
+   <description>
+Reverses the {@code BooleanControl} state. If the current state
+ represents {@code true} value, it'll be changed to {@code false}. If the
+ current state represents {@code false} value, it'll be changed to
+ {@code true}. The operation name is {@link #OPERATION_INVERSE}.
+   </description>
+
+
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+
+
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <method name='setTrue' fqn='org.osgi.service.dal.functions.BooleanControl.setTrue' qn='BooleanControl.setTrue()' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='void' qualifiedTypeName='void' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Sets the {@code BooleanControl} state to {@code true} value.
+   </lead>
+   <description>
+Sets the {@code BooleanControl} state to {@code true} value. The
+ operation name is {@link #OPERATION_SET_TRUE}.
+   </description>
+
+
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+
+
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <method name='setFalse' fqn='org.osgi.service.dal.functions.BooleanControl.setFalse' qn='BooleanControl.setFalse()' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='void' qualifiedTypeName='void' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Sets the {@code BooleanControl} state to {@code false} value.
+   </lead>
+   <description>
+Sets the {@code BooleanControl} state to {@code false} value. The
+ operation name is {@link #OPERATION_SET_FALSE}.
+   </description>
+
+
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+
+
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <field name='OPERATION_INVERSE' fqn='org.osgi.service.dal.functions.BooleanControl.OPERATION_INVERSE' qn='BooleanControl.OPERATION_INVERSE' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"inverse"'>
+   <lead>
+Specifies the inverse operation name.
+   </lead>
+   <description>
+Specifies the inverse operation name. The operation can be executed with
+ {@link #inverse()} method.
+   </description>
+
+     </field>
+    <field name='OPERATION_SET_TRUE' fqn='org.osgi.service.dal.functions.BooleanControl.OPERATION_SET_TRUE' qn='BooleanControl.OPERATION_SET_TRUE' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"setTrue"'>
+   <lead>
+Specifies the operation name, which sets the control state to
+ {@code true} value.
+   </lead>
+   <description>
+Specifies the operation name, which sets the control state to
+ {@code true} value. The operation can be executed with {@link #setTrue()}
+ method.
+   </description>
+
+     </field>
+    <field name='OPERATION_SET_FALSE' fqn='org.osgi.service.dal.functions.BooleanControl.OPERATION_SET_FALSE' qn='BooleanControl.OPERATION_SET_FALSE' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"setFalse"'>
+   <lead>
+Specifies the operation name, which sets the control state to
+ {@code false} value.
+   </lead>
+   <description>
+Specifies the operation name, which sets the control state to
+ {@code false} value. The operation can be executed with
+ {@link #setFalse()} method.
+   </description>
+
+     </field>
+    <field name='PROPERTY_DATA' fqn='org.osgi.service.dal.functions.BooleanControl.PROPERTY_DATA' qn='BooleanControl.PROPERTY_DATA' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"data"'>
+   <lead>
+Specifies the state property name.
+   </lead>
+   <description>
+Specifies the state property name. The eventable property value is
+ accessible with {@link #getData()} method.
+   </description>
+<a href='#BooleanData'>BooleanData</a>
+     </field>
+  </class>
+  <class name='BooleanSensor' fqn='org.osgi.service.dal.functions.BooleanSensor' qn='BooleanSensor' package='org.osgi.service.dal.functions' typeParam='' modifiers='public abstract' superclass='Function' interface='yes' kind='INTERFACE'>
+   <lead>
+{@code BooleanSensor} function provides boolean sensor monitoring.
+   </lead>
+   <description>
+{@code BooleanSensor} function provides boolean sensor monitoring. It reports
+ its state when an important event is available. The eventable state is
+ accessible with {@link #getData()} getter. There are no operations.
+ <p>
+ The sensor type can be:
+ </p><ul>
+ <li>{@link Types#LIGHT}</li>
+ <li>{@link Types#GAS}</li>
+ <li>{@link Types#SMOKE}</li>
+ <li>{@link Types#DOOR}</li>
+ <li>{@link Types#WINDOW}</li>
+ <li>{@link Types#POWER}</li>
+ <li>{@link Types#RAIN}</li>
+ <li>{@link Types#CONTACT}</li>
+ <li>{@link Types#FIRE}</li>
+ <li>{@link Types#OCCUPANCY}</li>
+ <li>{@link Types#WATER}</li>
+ <li>{@link Types#MOTION}</li>
+ <li>other type defined in {@link Types}</li>
+ <li>custom - vendor specific type</li>
+ </ul>
+   </description>
+<a href='#BooleanData'>BooleanData</a>
+<implements name='Function' fqn='org.osgi.service.dal.Function' qn='Function' package='org.osgi.service.dal' local='org.osgi.service.dal.functions.BooleanSensor'/>
+    <method name='getData' fqn='org.osgi.service.dal.functions.BooleanSensor.getData' qn='BooleanSensor.getData()' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='BooleanData' qualifiedTypeName='org.osgi.service.dal.functions.data.BooleanData' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns the {@code BooleanSensor} current state.
+   </lead>
+   <description>
+Returns the {@code BooleanSensor} current state. It's a getter method for
+ {@link #PROPERTY_DATA} property.
+   </description>
+
+
+<return>The {@code BooleanSensor} current state.</return>
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+
+<a href='#BooleanData'>BooleanData</a>
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <field name='PROPERTY_DATA' fqn='org.osgi.service.dal.functions.BooleanSensor.PROPERTY_DATA' qn='BooleanSensor.PROPERTY_DATA' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"data"'>
+   <lead>
+Specifies the state property name.
+   </lead>
+   <description>
+Specifies the state property name. The eventable property value is
+ accessible with {@link #getData()} getter.
+   </description>
+
+     </field>
+  </class>
+  <class name='Keypad' fqn='org.osgi.service.dal.functions.Keypad' qn='Keypad' package='org.osgi.service.dal.functions' typeParam='' modifiers='public abstract' superclass='Function' interface='yes' kind='INTERFACE'>
+   <lead>
+{@code Keypad} function provides support for keypad control.
+   </lead>
+   <description>
+{@code Keypad} function provides support for keypad control. The keypad
+ typically consists of one or more keys/buttons, which can be discerned.
+ Different types of key presses like short and long press can typically also
+ be detected. Each key pressed event is followed by a key released event. It's
+ not possible to have two consecutive key pressed or key released events.
+ There is only one eventable property and no operations.
+ <p>
+ {@code Keypad} can enumerate all supported keys in the key property metadata,
+ {@link PropertyMetadata#getEnumValues(String)}.</p>
+   </description>
+<a href='#KeypadData'>KeypadData</a>
+<implements name='Function' fqn='org.osgi.service.dal.Function' qn='Function' package='org.osgi.service.dal' local='org.osgi.service.dal.functions.Keypad'/>
+    <field name='PROPERTY_KEY' fqn='org.osgi.service.dal.functions.Keypad.PROPERTY_KEY' qn='Keypad.PROPERTY_KEY' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"key"'>
+   <lead>
+Specifies a property name for a key from the keypad.
+   </lead>
+   <description>
+Specifies a property name for a key from the keypad. The property is
+ eventable.
+   </description>
+<a href='#KeypadData'>KeypadData</a>
+     </field>
+  </class>
+  <class name='Meter' fqn='org.osgi.service.dal.functions.Meter' qn='Meter' package='org.osgi.service.dal.functions' typeParam='' modifiers='public abstract' superclass='Function' interface='yes' kind='INTERFACE'>
+   <lead>
+{@code Meter} function can measure metering information.
+   </lead>
+   <description>
+{@code Meter} function can measure metering information. The function
+ provides these properties:
+ <ul>
+ <li>{@link #PROPERTY_CURRENT} - eventable property accessible with
+ {@link #getCurrent()} getter;</li>
+ <li>{@link #PROPERTY_TOTAL} - eventable property accessible with
+ {@link #getTotal()} getter.</li>
+ </ul>
+ <p>
+ The sensor type can be:
+ </p><ul>
+ <li>{@link Types#PRESSURE}</li>
+ <li>{@link Types#GAS}</li>
+ <li>{@link Types#POWER}</li>
+ <li>{@link Types#WATER}</li>
+ <li>{@link Types#HEAT}</li>
+ <li>{@link Types#COLD}</li>
+ <li>other type defined in {@link Types}</li>
+ <li>custom - vendor specific type</li>
+ </ul>
+   </description>
+<a href='#LevelData'>LevelData</a>
+<implements name='Function' fqn='org.osgi.service.dal.Function' qn='Function' package='org.osgi.service.dal' local='org.osgi.service.dal.functions.Meter'/>
+    <method name='getCurrent' fqn='org.osgi.service.dal.functions.Meter.getCurrent' qn='Meter.getCurrent()' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='LevelData' qualifiedTypeName='org.osgi.service.dal.functions.data.LevelData' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns the current metering info.
+   </lead>
+   <description>
+Returns the current metering info. It's a getter method for
+ {@link #PROPERTY_CURRENT} property.
+   </description>
+
+
+<return>The current metering info.</return>
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+
+<a href='#LevelData'>LevelData</a>
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <method name='getTotal' fqn='org.osgi.service.dal.functions.Meter.getTotal' qn='Meter.getTotal()' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='LevelData' qualifiedTypeName='org.osgi.service.dal.functions.data.LevelData' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns the total metering info.
+   </lead>
+   <description>
+Returns the total metering info. It's a getter method for
+ {@link #PROPERTY_TOTAL} property.
+   </description>
+
+
+<return>The total metering info.</return>
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+
+<a href='#LevelData'>LevelData</a>
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <field name='FLOW_IN' fqn='org.osgi.service.dal.functions.Meter.FLOW_IN' qn='Meter.FLOW_IN' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"in"'>
+   <lead>
+Represents the metering consumption flow.
+   </lead>
+   <description>
+Represents the metering consumption flow. It can be used as
+ {@link #SERVICE_FLOW} property value.
+   </description>
+
+     </field>
+    <field name='FLOW_OUT' fqn='org.osgi.service.dal.functions.Meter.FLOW_OUT' qn='Meter.FLOW_OUT' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"out"'>
+   <lead>
+Represents the metering production flow.
+   </lead>
+   <description>
+Represents the metering production flow. It can be used as
+ {@link #SERVICE_FLOW} property value.
+   </description>
+
+     </field>
+    <field name='SERVICE_FLOW' fqn='org.osgi.service.dal.functions.Meter.SERVICE_FLOW' qn='Meter.SERVICE_FLOW' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"dal.meter.flow"'>
+   <lead>
+The service property value contains the metering flow.
+   </lead>
+   <description>
+The service property value contains the metering flow. It's an optional
+ property and available only if it's supported by the meter. The value
+ type is {@code java.lang.String}. Possible property values:
+ <ul>
+ <li>{@link #FLOW_IN}</li>
+ <li>{@link #FLOW_OUT}</li>
+ </ul>
+   </description>
+
+     </field>
+    <field name='PROPERTY_CURRENT' fqn='org.osgi.service.dal.functions.Meter.PROPERTY_CURRENT' qn='Meter.PROPERTY_CURRENT' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"current"'>
+   <lead>
+Specifies the current consumption or production property name.
+   </lead>
+   <description>
+Specifies the current consumption or production property name. The
+ eventable property can be read with {@link #getCurrent()} getter.
+   </description>
+
+     </field>
+    <field name='PROPERTY_TOTAL' fqn='org.osgi.service.dal.functions.Meter.PROPERTY_TOTAL' qn='Meter.PROPERTY_TOTAL' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"total"'>
+   <lead>
+Specifies the total consumption or production property name.
+   </lead>
+   <description>
+Specifies the total consumption or production property name. The
+ eventable property can be read with {@link #getTotal()} getter.
+   </description>
+
+     </field>
+  </class>
+  <class name='MultiLevelControl' fqn='org.osgi.service.dal.functions.MultiLevelControl' qn='MultiLevelControl' package='org.osgi.service.dal.functions' typeParam='' modifiers='public abstract' superclass='Function' interface='yes' kind='INTERFACE'>
+   <lead>
+{@code MultiLevelControl} function provides multi-level control support.
+   </lead>
+   <description>
+{@code MultiLevelControl} function provides multi-level control support. The
+ eventable function level is accessible with {@link #getData()} getter and
+ {@link #setData(BigDecimal, String)} setter.
+ <p>
+ The control type can be:
+ </p><ul>
+ <li>{@link Types#LIGHT}</li>
+ <li>{@link Types#TEMPERATURE}</li>
+ <li>{@link Types#FLOW}</li>
+ <li>{@link Types#PRESSURE}</li>
+ <li>{@link Types#HUMIDITY}</li>
+ <li>{@link Types#GAS}</li>
+ <li>{@link Types#SMOKE}</li>
+ <li>{@link Types#DOOR}</li>
+ <li>{@link Types#WINDOW}</li>
+ <li>{@link Types#LIQUID}</li>
+ <li>{@link Types#POWER}</li>
+ <li>{@link Types#NOISINESS}</li>
+ <li>other type defined in {@link Types}</li>
+ <li>custom - vendor specific type</li>
+ </ul>
+   </description>
+<a href='#LevelData'>LevelData</a>
+<implements name='Function' fqn='org.osgi.service.dal.Function' qn='Function' package='org.osgi.service.dal' local='org.osgi.service.dal.functions.MultiLevelControl'/>
+    <method name='getData' fqn='org.osgi.service.dal.functions.MultiLevelControl.getData' qn='MultiLevelControl.getData()' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='LevelData' qualifiedTypeName='org.osgi.service.dal.functions.data.LevelData' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns {@code MultiLevelControl} level.
+   </lead>
+   <description>
+Returns {@code MultiLevelControl} level. It's a getter method for
+ {@link #PROPERTY_DATA} property.
+   </description>
+
+
+<return>{@code MultiLevelControl} level.</return>
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+
+<a href='#LevelData'>LevelData</a>
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <method name='setData' fqn='org.osgi.service.dal.functions.MultiLevelControl.setData' qn='MultiLevelControl.setData(BigDecimal,String)' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='void' qualifiedTypeName='void' typeArgs='' dimension='' signature='(java.math.BigDecimal,java.lang.String)' flatSignature='(BigDecimal,String)'>
+   <lead>
+Sets {@code MultiLevelControl} level according to the specified unit.
+   </lead>
+   <description>
+Sets {@code MultiLevelControl} level according to the specified unit.
+ It's a setter method for {@link #PROPERTY_DATA} property.
+   </description>
+
+<param name='level'>The new control level.</param>
+<param name='unit'>The level unit.</param>
+
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+<throws name='IllegalArgumentException'>If there is an invalid argument.</throws>
+
+
+    <parameter name='level' dimension='' typeName='BigDecimal' fqn='java.math.BigDecimal' varargs='false'/>
+    <parameter name='unit' dimension='' typeName='String' fqn='java.lang.String' varargs='false'/>
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <field name='PROPERTY_DATA' fqn='org.osgi.service.dal.functions.MultiLevelControl.PROPERTY_DATA' qn='MultiLevelControl.PROPERTY_DATA' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"data"'>
+   <lead>
+Specifies the level property name.
+   </lead>
+   <description>
+Specifies the level property name. The eventable property can be read
+ with {@link #getData()} getter and can be set with
+ {@link #setData(BigDecimal, String)} setters.
+   </description>
+
+     </field>
+  </class>
+  <class name='MultiLevelSensor' fqn='org.osgi.service.dal.functions.MultiLevelSensor' qn='MultiLevelSensor' package='org.osgi.service.dal.functions' typeParam='' modifiers='public abstract' superclass='Function' interface='yes' kind='INTERFACE'>
+   <lead>
+{@code MultiLevelSensor} function provides multi-level sensor monitoring.
+   </lead>
+   <description>
+{@code MultiLevelSensor} function provides multi-level sensor monitoring. It
+ reports its state when an important event is available. The eventable state
+ is accessible with {@link #getData()} getter. There are no operations.
+ <p>
+ The sensor type can be:
+ </p><ul>
+ <li>{@link Types#LIGHT}</li>
+ <li>{@link Types#TEMPERATURE}</li>
+ <li>{@link Types#FLOW}</li>
+ <li>{@link Types#PRESSURE}</li>
+ <li>{@link Types#HUMIDITY}</li>
+ <li>{@link Types#GAS}</li>
+ <li>{@link Types#SMOKE}</li>
+ <li>{@link Types#DOOR}</li>
+ <li>{@link Types#WINDOW}</li>
+ <li>{@link Types#LIQUID}</li>
+ <li>{@link Types#POWER}</li>
+ <li>{@link Types#NOISINESS}</li>
+ <li>{@link Types#RAIN}</li>
+ <li>other type defined in {@link Types}</li>
+ <li>custom - vendor specific type</li>
+ </ul>
+   </description>
+<a href='#LevelData'>LevelData</a>
+<implements name='Function' fqn='org.osgi.service.dal.Function' qn='Function' package='org.osgi.service.dal' local='org.osgi.service.dal.functions.MultiLevelSensor'/>
+    <method name='getData' fqn='org.osgi.service.dal.functions.MultiLevelSensor.getData' qn='MultiLevelSensor.getData()' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='LevelData' qualifiedTypeName='org.osgi.service.dal.functions.data.LevelData' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns the {@code MultiLevelSensor} current state.
+   </lead>
+   <description>
+Returns the {@code MultiLevelSensor} current state. It's a getter method
+ for {@link #PROPERTY_DATA} property.
+   </description>
+
+
+<return>The {@code MultiLevelSensor} current state.</return>
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+
+<a href='#LevelData'>LevelData</a>
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <field name='PROPERTY_DATA' fqn='org.osgi.service.dal.functions.MultiLevelSensor.PROPERTY_DATA' qn='MultiLevelSensor.PROPERTY_DATA' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"data"'>
+   <lead>
+Specifies the state property name.
+   </lead>
+   <description>
+Specifies the state property name. The eventable property can be read
+ with {@link #getData()} getter.
+   </description>
+<a href='#LevelData'>LevelData</a>
+     </field>
+  </class>
+  <class name='Types' fqn='org.osgi.service.dal.functions.Types' qn='Types' package='org.osgi.service.dal.functions' typeParam='' modifiers='public abstract' interface='yes' kind='INTERFACE'>
+   <lead>
+Shares common constants for all functions defined in this package.
+   </lead>
+   <description>
+Shares common constants for all functions defined in this package. The
+ defined function types are mapped as follow:
+ <ul>
+ <li>{@link #LIGHT} - {@link MultiLevelControl}, {@link MultiLevelSensor},
+ {@link BooleanSensor} and {@link BooleanControl}</li>
+ <li>{@link #TEMPERATURE} - {@link MultiLevelControl} and
+ {@link MultiLevelSensor}</li>
+ <li>{@link #FLOW} - {@link MultiLevelControl} and {@link MultiLevelSensor}</li>
+ <li>{@link #PRESSURE} - {@link MultiLevelControl}, {@link MultiLevelSensor}
+ and {@link Meter}</li>
+ <li>{@link #HUMIDITY} - {@link MultiLevelControl} and
+ {@link MultiLevelSensor}</li>
+ <li>{@link #GAS} - {@link MultiLevelControl}, {@link MultiLevelSensor},
+ {@link BooleanSensor} and {@link Meter}</li>
+ <li>{@link #SMOKE} - {@link MultiLevelControl}, {@link MultiLevelSensor} and
+ {@link BooleanSensor}</li>
+ <li>{@link #DOOR} - {@link MultiLevelControl}, {@link MultiLevelSensor},
+ {@link BooleanSensor} and {@link BooleanControl}</li>
+ <li>{@link #WINDOW} - {@link MultiLevelControl}, {@link MultiLevelSensor},
+ {@link BooleanSensor} and {@link BooleanControl}</li>
+ <li>{@link #LIQUID} - {@link MultiLevelControl} and {@link MultiLevelSensor}</li>
+ <li>{@link #POWER} - {@link MultiLevelControl}, {@link MultiLevelSensor},
+ {@link BooleanSensor}, {@link BooleanControl} and {@link Meter}</li>
+ <li>{@link #NOISINESS} - {@link MultiLevelControl} and
+ {@link MultiLevelSensor}</li>
+ <li>{@link #RAIN} - {@link MultiLevelSensor} and {@link BooleanSensor}</li>
+ <li>{@link #CONTACT} - {@link BooleanSensor}</li>
+ <li>{@link #FIRE} - {@link BooleanSensor}</li>
+ <li>{@link #OCCUPANCY} - {@link BooleanSensor}</li>
+ <li>{@link #WATER} - {@link BooleanSensor} and {@link Meter}</li>
+ <li>{@link #MOTION} - {@link BooleanSensor}</li>
+ <li>{@link #HEAT} - {@link Meter}</li>
+ <li>{@link #COLD} - {@link Meter}</li>
+ </ul>
+ The mapping is not mandatory. The function can use custom defined types.
+   </description>
+
+    <field name='LIGHT' fqn='org.osgi.service.dal.functions.Types.LIGHT' qn='Types.LIGHT' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"light"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control light devices.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control light devices. Usually, such devices are called dimmable.
+ {@code MultiLevelControl} minimum value can switch off the device and
+ {@code MultiLevelControl} maximum value can increase the device light to
+ the maximum possible value.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ light level.</li>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detected light. {@code true} state means that there is light.
+ {@code false} state means that there is no light.</li>
+ <li>
+ {@code BooleanControl} - indicates that there is a light device control.
+ {@code true} state means that the light device will be turned on.
+ {@code false} state means that the light device will be turned off.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='TEMPERATURE' fqn='org.osgi.service.dal.functions.Types.TEMPERATURE' qn='Types.TEMPERATURE' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"temperature"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control temperature devices.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control temperature devices. For example, such device can be
+ thermostat. {@code MultiLevelControl} minimum value is the lowest
+ supported temperature. {@code MultiLevelControl} maximum value is the
+ highest supported temperature.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ temperature.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='FLOW' fqn='org.osgi.service.dal.functions.Types.FLOW' qn='Types.FLOW' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"flow"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the flow level.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the flow level. {@code MultiLevelControl} minimum value is
+ the minimum supported flow level. {@code MultiLevelControl} maximum value
+ is the maximum supported flow level.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the flow
+ level.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='PRESSURE' fqn='org.osgi.service.dal.functions.Types.PRESSURE' qn='Types.PRESSURE' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"pressure"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the pressure level.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the pressure level. {@code MultiLevelControl} minimum value
+ is the lowest supported pressure level. {@code MultiLevelControl} maximum
+ value is the highest supported pressure level.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ pressure level.</li>
+ <li>
+ {@code Meter} - Indicates that the {@code Meter} measures pressure.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='HUMIDITY' fqn='org.osgi.service.dal.functions.Types.HUMIDITY' qn='Types.HUMIDITY' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"humidity"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the humidity level.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the humidity level. It's typical functionality for HVAC
+ (heating, ventilation, and air conditioning) devices.
+ {@code MultiLevelControl} minimum value is the lowest supported humidity
+ level. {@code MultiLevelControl} maximum value is the highest supported
+ humidity level.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ humidity level.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='GAS' fqn='org.osgi.service.dal.functions.Types.GAS' qn='Types.GAS' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"gas"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the gas level.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the gas level. {@code MultiLevelControl} minimum value is the
+ lowest supported gas level. {@code MultiLevelControl} maximum value is
+ the highest supported gas level.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the gas
+ level.</li>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} supports
+ gas detection. {@code true} state means there is gas. {@code false} state
+ means that there is no gas.</li>
+ <li>
+ {@code Meter} - indicates that the {@code Meter} measures the gas
+ consumption.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='SMOKE' fqn='org.osgi.service.dal.functions.Types.SMOKE' qn='Types.SMOKE' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"smoke"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the smoke level.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the smoke level. {@code MultiLevelControl} minimum value is
+ the lowest supported smoke level. {@code MultiLevelControl} maximum value
+ is the highest supported smoke level.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ smoke level.</li>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect smoke. {@code true} state means that there is smoke. {@code false}
+ state means that there is no smoke.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='DOOR' fqn='org.osgi.service.dal.functions.Types.DOOR' qn='Types.DOOR' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"door"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the door position.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the door position. {@code MultiLevelControl} minimum value
+ can completely close the door. {@code MultiLevelControl} maximum value
+ can open the door to the maximum allowed position.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the door
+ position.</li>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect the door state. {@code true} state means that the door is opened.
+ {@code false} state means that the door is closed.</li>
+ <li>
+ {@code BooleanControl} - indicates that there is a door position control.
+ {@code true} state means that the door will be opened. {@code false}
+ state means that the door will be closed.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='WINDOW' fqn='org.osgi.service.dal.functions.Types.WINDOW' qn='Types.WINDOW' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"window"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the window position.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the window position. {@code MultiLevelControl} minimum value
+ can completely close the window. {@code MultiLevelControl} maximum value
+ can open the window to the maximum allowed position.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ window position.</li>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ window state. {@code true} state means that the window is opened.
+ {@code false} state means that the window is closed.</li>
+ <li>
+ {@code BooleanControl} - indicates that there is a window position
+ control. {@code true} state means that the window will be opened.
+ {@code false} state means that the window will be closed.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='LIQUID' fqn='org.osgi.service.dal.functions.Types.LIQUID' qn='Types.LIQUID' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"liquid"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the liquid level.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the liquid level. {@code MultiLevelControl} minimum value is
+ the lowest supported liquid level. {@code MultiLevelControl} maximum
+ value is the highest supported liquid level.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ liquid level.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='POWER' fqn='org.osgi.service.dal.functions.Types.POWER' qn='Types.POWER' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"power"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the power level.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the power level. {@code MultiLevelControl} minimum value is
+ the lowest supported power level. {@code MultiLevelControl} maximum value
+ is the highest supported power level.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ power level.</li>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect power/no power. {@code true} state means that there is power.
+ {@code false} state means that there is no power.</li>
+ <li>
+ {@code BooleanControl} - indicates that there is electricity control.
+ {@code true} state means that the power will be restored. {@code false}
+ state means that the power will be cut.</li>
+ <li>
+ {@code Meter} - indicates that the {@code Meter} measures the power
+ consumption.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='NOISINESS' fqn='org.osgi.service.dal.functions.Types.NOISINESS' qn='Types.NOISINESS' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"noisiness"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the noise level.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the noise level. {@code MultiLevelControl} minimum value is
+ the lowest supported noise level. {@code MultiLevelControl} maximum value
+ is the highest supported noise level.</li>
+ <li>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ noise level.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='RAIN' fqn='org.osgi.service.dal.functions.Types.RAIN' qn='Types.RAIN' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"rain"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelSensor} - indicates that the {@code MultiLevelSensor}
+ can monitor the rain rate.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code MultiLevelSensor} - indicates that the {@code MultiLevelSensor}
+ can monitor the rain rate. It's not applicable to
+ {@code MultiLevelControl}.</li>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect rain. {@code true} state means that there is rain. {@code false}
+ state means that there is no rain.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='CONTACT' fqn='org.osgi.service.dal.functions.Types.CONTACT' qn='Types.CONTACT' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"contact"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect contact.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect contact. {@code true} state means that there is contact.
+ {@code false} state means that there is no contact.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='FIRE' fqn='org.osgi.service.dal.functions.Types.FIRE' qn='Types.FIRE' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"fire"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect fire.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect fire. {@code true} state means that there is fire. {@code false}
+ state means that there is no fire.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='OCCUPANCY' fqn='org.osgi.service.dal.functions.Types.OCCUPANCY' qn='Types.OCCUPANCY' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"occupancy"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect presence.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect presence. {@code true} state means that someone is detected.
+ {@code false} state means that nobody is detected.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='WATER' fqn='org.osgi.service.dal.functions.Types.WATER' qn='Types.WATER' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"water"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect water leak.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect water leak. {@code true} state means that there is water leak.
+ {@code false} state means that there is no water leak.</li>
+ <li>
+ {@code Meter} - indicates that the {@code Meter} measures water
+ consumption.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='MOTION' fqn='org.osgi.service.dal.functions.Types.MOTION' qn='Types.MOTION' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"motion"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect motion.</li></ul>
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect motion. {@code true} state means that there is motion detection.
+ {@code false} state means that there is no motion detection.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='HEAT' fqn='org.osgi.service.dal.functions.Types.HEAT' qn='Types.HEAT' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"heat"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code Meter} - indicates that the {@code Meter} measures thermal energy
+ provided by a source.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code Meter} - indicates that the {@code Meter} measures thermal energy
+ provided by a source.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+    <field name='COLD' fqn='org.osgi.service.dal.functions.Types.COLD' qn='Types.COLD' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"cold"'>
+   <lead>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code Meter} - indicates that the {@code Meter} measures thermal energy
+ provided by a source.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </lead>
+   <description>
+The function type is applicable to:
+ <ul>
+ <li>
+ {@code Meter} - indicates that the {@code Meter} measures thermal energy
+ provided by a source.</li>
+ </ul>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </description>
+
+     </field>
+  </class>
+  <class name='WakeUp' fqn='org.osgi.service.dal.functions.WakeUp' qn='WakeUp' package='org.osgi.service.dal.functions' typeParam='' modifiers='public abstract' superclass='Function' interface='yes' kind='INTERFACE'>
+   <lead>
+{@code WakeUp} function provides device awake monitoring.
+   </lead>
+   <description>
+{@code WakeUp} function provides device awake monitoring. It's especially
+ applicable to battery-operated devices. Such device can notify the system
+ that it's awake and can receive commands with a {@link #PROPERTY_AWAKE}
+ property event.
+ <p>
+ The device can periodically wake up for commands. The interval can be managed
+ with {@link #PROPERTY_WAKE_UP_INTERVAL} property.</p>
+   </description>
+<a href='#LevelData'>LevelData</a><a href='#BooleanData'>BooleanData</a>
+<implements name='Function' fqn='org.osgi.service.dal.Function' qn='Function' package='org.osgi.service.dal' local='org.osgi.service.dal.functions.WakeUp'/>
+    <method name='getWakeUpInterval' fqn='org.osgi.service.dal.functions.WakeUp.getWakeUpInterval' qn='WakeUp.getWakeUpInterval()' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='LevelData' qualifiedTypeName='org.osgi.service.dal.functions.data.LevelData' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns the current wake up interval.
+   </lead>
+   <description>
+Returns the current wake up interval. It's a getter method for
+ {@link #PROPERTY_WAKE_UP_INTERVAL} property. The device can periodically
+ wake up and receive command based on this interval.
+ <p>
+ The interval can be measured in different units like hours, minutes,
+ seconds, etc. The unit is specified in {@code LevelData} instance.</p>
+   </description>
+
+
+<return>The current wake up interval.</return>
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+
+<a href='#LevelData'>LevelData</a>
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <method name='setWakeUpInterval' fqn='org.osgi.service.dal.functions.WakeUp.setWakeUpInterval' qn='WakeUp.setWakeUpInterval(BigDecimal,String)' package='org.osgi.service.dal.functions' modifiers='public abstract' typeName='void' qualifiedTypeName='void' typeArgs='' dimension='' signature='(java.math.BigDecimal,java.lang.String)' flatSignature='(BigDecimal,String)'>
+   <lead>
+Sets wake up interval according to the specified unit.
+   </lead>
+   <description>
+Sets wake up interval according to the specified unit. It's a setter
+ method for {@link #PROPERTY_WAKE_UP_INTERVAL} property. The device can
+ periodically wake up and receive command based on this interval. The unit
+ can be {@code null}, then the interval is measured in milliseconds.
+   </description>
+
+<param name='interval'>The new wake up interval.</param>
+<param name='unit'>The interval unit. If the unit is {@code null}, the interval
+        is measured in milliseconds.</param>
+
+
+<throws name='IllegalStateException'>If this function service object has already
+         been unregistered.</throws>
+<throws name='DeviceException'>If an operation error is available.</throws>
+<throws name='IllegalArgumentException'>If there is an invalid argument.</throws>
+
+
+    <parameter name='interval' dimension='' typeName='BigDecimal' fqn='java.math.BigDecimal' varargs='false'/>
+    <parameter name='unit' dimension='' typeName='String' fqn='java.lang.String' varargs='false'/>
+<exception name='DeviceException' fqn='org.osgi.service.dal.DeviceException'/>
+     </method>
+    <field name='PROPERTY_AWAKE' fqn='org.osgi.service.dal.functions.WakeUp.PROPERTY_AWAKE' qn='WakeUp.PROPERTY_AWAKE' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"awake"'>
+   <lead>
+Specifies the awake property name.
+   </lead>
+   <description>
+Specifies the awake property name. The property access type can be
+ {@link PropertyMetadata#ACCESS_EVENTABLE}. If the device is awake, it
+ will trigger a property event.
+ <p>
+ The property value type is {@code BooleanData}. The boolean data is
+ always {@code true}. It marks that the device is awake.</p>
+   </description>
+
+     </field>
+    <field name='PROPERTY_WAKE_UP_INTERVAL' fqn='org.osgi.service.dal.functions.WakeUp.PROPERTY_WAKE_UP_INTERVAL' qn='WakeUp.PROPERTY_WAKE_UP_INTERVAL' package='org.osgi.service.dal.functions' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"wakeUpInterval"'>
+   <lead>
+Specifies the wake up interval.
+   </lead>
+   <description>
+Specifies the wake up interval. The device can periodically wake up and
+ receive commands. That interval is managed by this eventable property.
+ The current property value is available with {@link #getWakeUpInterval()}
+ and can be modified with {@link #setWakeUpInterval(BigDecimal, String)}.
+   </description>
+
+     </field>
+  </class>
+  </package>
+  <package name='org.osgi.service.dal.functions.data' fqn='org.osgi.service.dal.functions.data' qn='org.osgi.service.dal.functions.data'>
+<org.osgi.annotation.versioning.Version><value>1.0</value>
+</org.osgi.annotation.versioning.Version>
+   <lead>
+Device Abstraction Layer Functions Data Package 1.0.
+   </lead>
+   <description>
+Device Abstraction Layer Functions Data Package 1.0.
+ 
+ <p>
+ Bundles wishing to use this package must list the package in the
+ Import-Package header of the bundle's manifest. This package has two types of
+ users: the consumers that use the API in this package and the providers that
+ implement the API in this package.
+ 
+ </p><p>
+ Example import for consumers using the API in this package:
+ </p><p>
+ {@code  Import-Package: org.osgi.service.dal.functions.data; version="[1.0,2.0)"}
+ </p><p>
+ Example import for providers implementing the API in this package:
+ </p><p>
+ {@code  Import-Package: org.osgi.service.dal.functions.data; version="[1.0,1.1)"}</p>
+   </description>
+<author>@author $Id: 4a6640cc39c47fbde1c17b443232fa0bf9776af1 $</author>
+  <class name='AlarmData' fqn='org.osgi.service.dal.functions.data.AlarmData' qn='AlarmData' package='org.osgi.service.dal.functions.data' typeParam='' modifiers='public class' superclass='FunctionData' kind='CLASS'>
+   <lead>
+Function alarm data.
+   </lead>
+   <description>
+Function alarm data. It cares about the alarm type, severity, timestamp and
+ additional metadata. It doesn't support unit. The alarm type is mapped to
+ {@code FunctionData} value.
+   </description>
+<a href='#Alarm'>Alarm</a><a href='#FunctionData'>FunctionData</a>
+    <method name='AlarmData' fqn='org.osgi.service.dal.functions.data.AlarmData.AlarmData' qn='AlarmData.AlarmData(Map)' package='org.osgi.service.dal.functions.data' typeArgs='' modifiers='public' signature='(java.util.Map&lt;java.lang.String,?&gt;)' flatSignature='(Map)' isConstructor='true'>
+   <lead>
+Constructs new {@code AlarmData} instance with the specified field
+ values.
+   </lead>
+   <description>
+Constructs new {@code AlarmData} instance with the specified field
+ values. The map keys must match to the field names. The map values will
+ be assigned to the appropriate class fields. For example, the maps can
+ be: {"severity"=Integer(1)...}. That map will initialize the
+ {@link #FIELD_SEVERITY} field with 1. If severity is missing,
+ {@link #SEVERITY_UNDEFINED} is used.
+ <ul>
+ <li>{@link #FIELD_SEVERITY} - optional field. The value type must be
+ {@code Integer}.</li>
+ <li>{@link #FIELD_TYPE} - optional field. The value type must be
+ {@code Integer}.</li>
+ </ul>
+   </description>
+
+<param name='fields'>Contains the new {@code AlarmData} instance field values.</param>
+
+
+<throws name='ClassCastException'>If the field value types are not expected.</throws>
+<throws name='IllegalArgumentException'>If the alarm severity is invalid.</throws>
+<throws name='NullPointerException'>If the fields map is {@code null}.</throws>
+
+
+    <parameter name='fields' dimension='' typeName='Map&lt;String, ?&gt;' fqn='java.util.Map' varargs='false'/>
+     </method>
+    <method name='AlarmData' fqn='org.osgi.service.dal.functions.data.AlarmData.AlarmData' qn='AlarmData.AlarmData(long,Map,int,int)' package='org.osgi.service.dal.functions.data' typeArgs='' modifiers='public' signature='(long,java.util.Map&lt;java.lang.String,?&gt;,int,int)' flatSignature='(long,Map,int,int)' isConstructor='true'>
+   <lead>
+Constructs new {@code AlarmData} instance with the specified arguments.
+   </lead>
+   <description>
+Constructs new {@code AlarmData} instance with the specified arguments.
+   </description>
+
+<param name='timestamp'>The alarm data timestamp optional field.</param>
+<param name='metadata'>The alarm data metadata optional field.</param>
+<param name='severity'>The alarm data severity optional field.</param>
+<param name='type'>The alarm data type optional field.</param>
+
+
+<throws name='IllegalArgumentException'>If the alarm severity is invalid.</throws>
+
+
+    <parameter name='timestamp' dimension='' typeName='long' fqn='long' varargs='false'/>
+    <parameter name='metadata' dimension='' typeName='Map&lt;String, ?&gt;' fqn='java.util.Map' varargs='false'/>
+    <parameter name='severity' dimension='' typeName='int' fqn='int' varargs='false'/>
+    <parameter name='type' dimension='' typeName='int' fqn='int' varargs='false'/>
+     </method>
+    <method name='getType' fqn='org.osgi.service.dal.functions.data.AlarmData.getType' qn='AlarmData.getType()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns the alarm type.
+   </lead>
+   <description>
+Returns the alarm type. The type can be one of the predefined:
+ <ul>
+ <li>{@link #TYPE_UNDEFINED}</li>
+ <li>{@link #TYPE_SMOKE}</li>
+ <li>{@link #TYPE_HEAT}</li>
+ <li>{@link #TYPE_COLD}</li>
+ <li>{@link #TYPE_GAS_CO}</li>
+ <li>{@link #TYPE_GAS_CO2}</li>
+ <li>{@link #TYPE_WATER}</li>
+ <li>{@link #TYPE_POWER_FAIL}</li>
+ <li>{@link #TYPE_HARDWARE_FAIL}</li>
+ <li>{@link #TYPE_SOFTWARE_FAIL}</li>
+ <li>vendor specific</li>
+ </ul>
+ Zero and positive values are reserved for this definition and further
+ extensions of the alarm types. Custom types can be used only as negative
+ values to prevent potential collisions.
+   </description>
+
+
+<return>The alarm type.</return>
+
+
+
+     </method>
+    <method name='getSeverity' fqn='org.osgi.service.dal.functions.data.AlarmData.getSeverity' qn='AlarmData.getSeverity()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns the alarm severity.
+   </lead>
+   <description>
+Returns the alarm severity. The severity can be one of:
+ <ul>
+ <li>{@link #SEVERITY_UNDEFINED}</li>
+ <li>{@link #SEVERITY_MINOR}</li>
+ <li>{@link #SEVERITY_MAJOR}</li>
+ <li>{@link #SEVERITY_CRITICAL}</li>
+ </ul>
+   </description>
+
+
+<return>The alarm severity.</return>
+
+
+
+     </method>
+    <method name='equals' fqn='org.osgi.service.dal.functions.data.AlarmData.equals' qn='AlarmData.equals(Object)' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='boolean' qualifiedTypeName='boolean' typeArgs='' dimension='' signature='(java.lang.Object)' flatSignature='(Object)'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Two {@code AlarmData} instances are equal if they contain equal metadata,
+ timestamp, type and severity.
+   </lead>
+   <description>
+Two {@code AlarmData} instances are equal if they contain equal metadata,
+ timestamp, type and severity.
+   </description>
+
+<param name='o'>The object to compare this data.</param>
+
+<return>{@code true} if this object is equivalent to the specified one.</return>
+
+
+<a href='#org.osgi.service.dal.FunctionData.equals(java.lang.Object)'>org.osgi.service.dal.FunctionData.equals(java.lang.Object)</a>
+    <parameter name='o' dimension='' typeName='Object' fqn='java.lang.Object' varargs='false'/>
+     </method>
+    <method name='hashCode' fqn='org.osgi.service.dal.functions.data.AlarmData.hashCode' qn='AlarmData.hashCode()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='()' flatSignature='()'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Returns the hash code for this {@code AlarmData} object.
+   </lead>
+   <description>
+Returns the hash code for this {@code AlarmData} object. The hash code is
+ a sum of {@link FunctionData#hashCode()}, the alarm severity and the
+ alarm type.
+   </description>
+
+
+<return>The hash code of this {@code AlarmData} object.</return>
+
+
+<a href='#org.osgi.service.dal.FunctionData.hashCode()'>org.osgi.service.dal.FunctionData.hashCode()</a>
+     </method>
+    <method name='compareTo' fqn='org.osgi.service.dal.functions.data.AlarmData.compareTo' qn='AlarmData.compareTo(Object)' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='(java.lang.Object)' flatSignature='(Object)'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Compares this {@code AlarmData} instance with the given argument.
+   </lead>
+   <description>
+Compares this {@code AlarmData} instance with the given argument. If the
+ argument is not {@code AlarmData}, it throws {@code ClassCastException}.
+ Otherwise, this method returns:
+ <ul>
+ <li>{@code -1} if this instance field is less than a field of the
+ specified argument.</li>
+ <li>{@code 0} if all fields are equivalent.</li>
+ <li>{@code 1} if this instance field is greater than a field of the
+ specified argument.</li>
+ </ul>
+ The fields are compared in this order: timestamp, metadata, type,
+ severity.
+   </description>
+
+<param name='o'>{@code AlarmData} to be compared.</param>
+
+<return>{@code -1}, {@code 0} or {@code 1} depending on the comparison
+         rules.</return>
+
+<throws name='ClassCastException'>If the method argument is not of type
+         {@code AlarmData}.</throws>
+
+<a href='#java.lang.Comparable.compareTo(java.lang.Object)'>java.lang.Comparable.compareTo(java.lang.Object)</a>
+    <parameter name='o' dimension='' typeName='Object' fqn='java.lang.Object' varargs='false'/>
+     </method>
+    <method name='toString' fqn='org.osgi.service.dal.functions.data.AlarmData.toString' qn='AlarmData.toString()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='String' qualifiedTypeName='java.lang.String' typeArgs='' dimension='' signature='()' flatSignature='()'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Returns the string representation of this alarm data.
+   </lead>
+   <description>
+Returns the string representation of this alarm data.
+   </description>
+
+
+<return>The string representation of this alarm data.</return>
+
+
+
+     </method>
+    <field name='FIELD_SEVERITY' fqn='org.osgi.service.dal.functions.data.AlarmData.FIELD_SEVERITY' qn='AlarmData.FIELD_SEVERITY' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"severity"'>
+   <lead>
+Represents the severity field name.
+   </lead>
+   <description>
+Represents the severity field name. The field value is available with
+ {@link #getSeverity()}. The field type is {@code int}. The constant can
+ be used as a key to {@link #AlarmData(Map)} .
+   </description>
+
+     </field>
+    <field name='FIELD_TYPE' fqn='org.osgi.service.dal.functions.data.AlarmData.FIELD_TYPE' qn='AlarmData.FIELD_TYPE' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"type"'>
+   <lead>
+Represents the type field name.
+   </lead>
+   <description>
+Represents the type field name. The field value is available with
+ {@link #getType()}. The field type is {@code int}. The constant can be
+ used as a key to {@link #AlarmData(Map)}.
+   </description>
+
+     </field>
+    <field name='TYPE_UNDEFINED' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_UNDEFINED' qn='AlarmData.TYPE_UNDEFINED' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='0'>
+   <lead>
+The alarm type indicates that the type is not specified.
+   </lead>
+   <description>
+The alarm type indicates that the type is not specified.
+   </description>
+
+     </field>
+    <field name='TYPE_ACCESS_CONTROL' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_ACCESS_CONTROL' qn='AlarmData.TYPE_ACCESS_CONTROL' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='1'>
+   <lead>
+The alarm type indicates that there is access control issue.
+   </lead>
+   <description>
+The alarm type indicates that there is access control issue. For example,
+ the alarm can indicate that the door is unlocked.
+   </description>
+
+     </field>
+    <field name='TYPE_BURGLAR' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_BURGLAR' qn='AlarmData.TYPE_BURGLAR' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='2'>
+   <lead>
+The alarm type indicates that there is a burglar notification.
+   </lead>
+   <description>
+The alarm type indicates that there is a burglar notification. For
+ example, the alarm can indicate that the glass is broken.
+   </description>
+
+     </field>
+    <field name='TYPE_COLD' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_COLD' qn='AlarmData.TYPE_COLD' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='3'>
+   <lead>
+The alarm type indicates that temperature is too low.
+   </lead>
+   <description>
+The alarm type indicates that temperature is too low.
+   </description>
+
+     </field>
+    <field name='TYPE_GAS_CO' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_GAS_CO' qn='AlarmData.TYPE_GAS_CO' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='4'>
+   <lead>
+The alarm type indicates that carbon monoxide (CO) is detected.
+   </lead>
+   <description>
+The alarm type indicates that carbon monoxide (CO) is detected.
+   </description>
+
+     </field>
+    <field name='TYPE_GAS_CO2' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_GAS_CO2' qn='AlarmData.TYPE_GAS_CO2' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='5'>
+   <lead>
+The alarm type indicates that carbon dioxide (CO2) is detected.
+   </lead>
+   <description>
+The alarm type indicates that carbon dioxide (CO2) is detected.
+   </description>
+
+     </field>
+    <field name='TYPE_HEAT' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_HEAT' qn='AlarmData.TYPE_HEAT' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='6'>
+   <lead>
+The alarm type indicates that temperature is too high.
+   </lead>
+   <description>
+The alarm type indicates that temperature is too high.
+   </description>
+
+     </field>
+    <field name='TYPE_HARDWARE_FAIL' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_HARDWARE_FAIL' qn='AlarmData.TYPE_HARDWARE_FAIL' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='7'>
+   <lead>
+The alarm type indicates that there is hardware failure.
+   </lead>
+   <description>
+The alarm type indicates that there is hardware failure.
+   </description>
+
+     </field>
+    <field name='TYPE_POWER_FAIL' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_POWER_FAIL' qn='AlarmData.TYPE_POWER_FAIL' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='8'>
+   <lead>
+The alarm type indicates a power cut.
+   </lead>
+   <description>
+The alarm type indicates a power cut.
+   </description>
+
+     </field>
+    <field name='TYPE_SMOKE' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_SMOKE' qn='AlarmData.TYPE_SMOKE' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='9'>
+   <lead>
+The alarm type indicates that smoke is detected.
+   </lead>
+   <description>
+The alarm type indicates that smoke is detected.
+   </description>
+
+     </field>
+    <field name='TYPE_SOFTWARE_FAIL' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_SOFTWARE_FAIL' qn='AlarmData.TYPE_SOFTWARE_FAIL' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='10'>
+   <lead>
+The alarm type indicates that there is software failure.
+   </lead>
+   <description>
+The alarm type indicates that there is software failure.
+   </description>
+
+     </field>
+    <field name='TYPE_TAMPER' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_TAMPER' qn='AlarmData.TYPE_TAMPER' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='11'>
+   <lead>
+The alarm type for a tamper indication.
+   </lead>
+   <description>
+The alarm type for a tamper indication.
+   </description>
+
+     </field>
+    <field name='TYPE_WATER' fqn='org.osgi.service.dal.functions.data.AlarmData.TYPE_WATER' qn='AlarmData.TYPE_WATER' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='12'>
+   <lead>
+The alarm type indicates that a water leak is detected.
+   </lead>
+   <description>
+The alarm type indicates that a water leak is detected.
+   </description>
+
+     </field>
+    <field name='SEVERITY_UNDEFINED' fqn='org.osgi.service.dal.functions.data.AlarmData.SEVERITY_UNDEFINED' qn='AlarmData.SEVERITY_UNDEFINED' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='0'>
+   <lead>
+The severity constant indicates that there is no severity rating for this
+ alarm.
+   </lead>
+   <description>
+The severity constant indicates that there is no severity rating for this
+ alarm.
+   </description>
+
+     </field>
+    <field name='SEVERITY_MINOR' fqn='org.osgi.service.dal.functions.data.AlarmData.SEVERITY_MINOR' qn='AlarmData.SEVERITY_MINOR' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='1'>
+   <lead>
+The severity rating indicates that there is a minor alarm.
+   </lead>
+   <description>
+The severity rating indicates that there is a minor alarm. The severity
+ priority is lower than {@link #SEVERITY_MAJOR} and
+ {@link #SEVERITY_CRITICAL}.
+   </description>
+
+     </field>
+    <field name='SEVERITY_MAJOR' fqn='org.osgi.service.dal.functions.data.AlarmData.SEVERITY_MAJOR' qn='AlarmData.SEVERITY_MAJOR' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='2'>
+   <lead>
+The severity rating indicates that there is a major alarm.
+   </lead>
+   <description>
+The severity rating indicates that there is a major alarm. The severity
+ priority is higher than {@link #SEVERITY_MINOR} and lower than
+ {@link #SEVERITY_CRITICAL}.
+   </description>
+
+     </field>
+    <field name='SEVERITY_CRITICAL' fqn='org.osgi.service.dal.functions.data.AlarmData.SEVERITY_CRITICAL' qn='AlarmData.SEVERITY_CRITICAL' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='3'>
+   <lead>
+The severity rating indicates that there a critical alarm.
+   </lead>
+   <description>
+The severity rating indicates that there a critical alarm. The severity
+ priority is higher than {@link #SEVERITY_MINOR} and
+ {@link #SEVERITY_MAJOR}.
+   </description>
+
+     </field>
+  </class>
+  <class name='BooleanData' fqn='org.osgi.service.dal.functions.data.BooleanData' qn='BooleanData' package='org.osgi.service.dal.functions.data' typeParam='' modifiers='public class' superclass='FunctionData' kind='CLASS'>
+   <lead>
+Function boolean data wrapper.
+   </lead>
+   <description>
+Function boolean data wrapper. It can contain a boolean value, timestamp and
+ additional metadata. It doesn't support measurement unit.
+   </description>
+<a href='#BooleanControl'>BooleanControl</a><a href='#BooleanSensor'>BooleanSensor</a><a href='#FunctionData'>FunctionData</a>
+    <method name='BooleanData' fqn='org.osgi.service.dal.functions.data.BooleanData.BooleanData' qn='BooleanData.BooleanData(Map)' package='org.osgi.service.dal.functions.data' typeArgs='' modifiers='public' signature='(java.util.Map&lt;java.lang.String,?&gt;)' flatSignature='(Map)' isConstructor='true'>
+   <lead>
+Constructs new {@code BooleanData} instance with the specified field
+ values.
+   </lead>
+   <description>
+Constructs new {@code BooleanData} instance with the specified field
+ values. The map keys must match to the field names. The map values will
+ be assigned to the appropriate class fields. For example, the maps can
+ be: {"value"=Boolean(true)...}. That map will initialize the
+ {@link #FIELD_VALUE} field with {@code true}.
+ <p>
+ {@link #FIELD_VALUE} - mandatory field. The value type must be
+ {@code Boolean}.</p>
+   </description>
+
+<param name='fields'>Contains the new {@code BooleanData} instance field values.</param>
+
+
+<throws name='ClassCastException'>If the field value types are not expected.</throws>
+<throws name='IllegalArgumentException'>If the value is missing.</throws>
+<throws name='NullPointerException'>If the fields map is {@code null}.</throws>
+
+
+    <parameter name='fields' dimension='' typeName='Map&lt;String, ?&gt;' fqn='java.util.Map' varargs='false'/>
+     </method>
+    <method name='BooleanData' fqn='org.osgi.service.dal.functions.data.BooleanData.BooleanData' qn='BooleanData.BooleanData(long,Map,boolean)' package='org.osgi.service.dal.functions.data' typeArgs='' modifiers='public' signature='(long,java.util.Map&lt;java.lang.String,?&gt;,boolean)' flatSignature='(long,Map,boolean)' isConstructor='true'>
+   <lead>
+Constructs new {@code BooleanData} instance with the specified arguments.
+   </lead>
+   <description>
+Constructs new {@code BooleanData} instance with the specified arguments.
+   </description>
+
+<param name='timestamp'>The boolean data timestamp optional field.</param>
+<param name='metadata'>The boolean data metadata optional field.</param>
+<param name='value'>The boolean value mandatory field.</param>
+
+
+
+
+    <parameter name='timestamp' dimension='' typeName='long' fqn='long' varargs='false'/>
+    <parameter name='metadata' dimension='' typeName='Map&lt;String, ?&gt;' fqn='java.util.Map' varargs='false'/>
+    <parameter name='value' dimension='' typeName='boolean' fqn='boolean' varargs='false'/>
+     </method>
+    <method name='getValue' fqn='org.osgi.service.dal.functions.data.BooleanData.getValue' qn='BooleanData.getValue()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='boolean' qualifiedTypeName='boolean' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns {@code BooleanData} value.
+   </lead>
+   <description>
+Returns {@code BooleanData} value.
+   </description>
+
+
+<return>{@code BooleanData} value.</return>
+
+
+
+     </method>
+    <method name='equals' fqn='org.osgi.service.dal.functions.data.BooleanData.equals' qn='BooleanData.equals(Object)' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='boolean' qualifiedTypeName='boolean' typeArgs='' dimension='' signature='(java.lang.Object)' flatSignature='(Object)'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Two {@code BooleanData} instances are equal if they contain equal
+ metadata, timestamp and boolean value.
+   </lead>
+   <description>
+Two {@code BooleanData} instances are equal if they contain equal
+ metadata, timestamp and boolean value.
+   </description>
+
+<param name='o'>The object to compare this data.</param>
+
+<return>{@code true} if this object is equivalent to the specified one.</return>
+
+
+<a href='#org.osgi.service.dal.FunctionData.equals(java.lang.Object)'>org.osgi.service.dal.FunctionData.equals(java.lang.Object)</a>
+    <parameter name='o' dimension='' typeName='Object' fqn='java.lang.Object' varargs='false'/>
+     </method>
+    <method name='hashCode' fqn='org.osgi.service.dal.functions.data.BooleanData.hashCode' qn='BooleanData.hashCode()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='()' flatSignature='()'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Returns the hash code for this {@code BooleanData} object.
+   </lead>
+   <description>
+Returns the hash code for this {@code BooleanData} object. The hash code
+ is a sum of {@link FunctionData#hashCode()} and
+ {@link Boolean#hashCode()}, where {@link Boolean#hashCode()} represents
+ the boolean value hash code.
+   </description>
+
+
+<return>The hash code of this {@code BooleanData} object.</return>
+
+
+<a href='#org.osgi.service.dal.FunctionData.hashCode()'>org.osgi.service.dal.FunctionData.hashCode()</a>
+     </method>
+    <method name='compareTo' fqn='org.osgi.service.dal.functions.data.BooleanData.compareTo' qn='BooleanData.compareTo(Object)' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='(java.lang.Object)' flatSignature='(Object)'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Compares this {@code BooleanData} instance with the given argument.
+   </lead>
+   <description>
+Compares this {@code BooleanData} instance with the given argument. If
+ the argument is not {@code BooleanData}, it throws
+ {@code ClassCastException}. Otherwise, this method returns:
+ <ul>
+ <li>{@code -1} if this instance field is less than a field of the
+ specified argument.</li>
+ <li>{@code 0} if all fields are equivalent.</li>
+ <li>{@code 1} if this instance field is greater than a field of the
+ specified argument.</li>
+ </ul>
+ The fields are compared in this order: timestamp, metadata, value.
+   </description>
+
+<param name='o'>{@code BooleanData} to be compared.</param>
+
+<return>{@code -1}, {@code 0} or {@code 1} depending on the comparison
+         rules.</return>
+
+<throws name='ClassCastException'>If the method argument is not of type
+         {@code BooleanData}.</throws>
+
+<a href='#java.lang.Comparable.compareTo(java.lang.Object)'>java.lang.Comparable.compareTo(java.lang.Object)</a>
+    <parameter name='o' dimension='' typeName='Object' fqn='java.lang.Object' varargs='false'/>
+     </method>
+    <method name='toString' fqn='org.osgi.service.dal.functions.data.BooleanData.toString' qn='BooleanData.toString()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='String' qualifiedTypeName='java.lang.String' typeArgs='' dimension='' signature='()' flatSignature='()'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Returns the string representation of this boolean data.
+   </lead>
+   <description>
+Returns the string representation of this boolean data.
+   </description>
+
+
+<return>The string representation of this boolean data.</return>
+
+
+
+     </method>
+    <field name='FIELD_VALUE' fqn='org.osgi.service.dal.functions.data.BooleanData.FIELD_VALUE' qn='BooleanData.FIELD_VALUE' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"value"'>
+   <lead>
+Represents the value field name.
+   </lead>
+   <description>
+Represents the value field name. The field value is available with
+ {@link #getValue()}. The field type is {@code boolean} . The constant can
+ be used as a key to {@link #BooleanData(Map)}.
+   </description>
+
+     </field>
+  </class>
+  <class name='KeypadData' fqn='org.osgi.service.dal.functions.data.KeypadData' qn='KeypadData' package='org.osgi.service.dal.functions.data' typeParam='' modifiers='public class' superclass='FunctionData' kind='CLASS'>
+   <lead>
+Represents a keypad event data that is collected when a change with some key
+ from the keypad has occurred.
+   </lead>
+   <description>
+Represents a keypad event data that is collected when a change with some key
+ from the keypad has occurred.
+ <p>
+ The key pressed event is using {@link #TYPE_PRESSED} type, while the key
+ released event is using {@link #TYPE_RELEASED} type.</p>
+   </description>
+<a href='#Keypad'>Keypad</a><a href='#FunctionData'>FunctionData</a>
+    <method name='KeypadData' fqn='org.osgi.service.dal.functions.data.KeypadData.KeypadData' qn='KeypadData.KeypadData(Map)' package='org.osgi.service.dal.functions.data' typeArgs='' modifiers='public' signature='(java.util.Map&lt;java.lang.String,?&gt;)' flatSignature='(Map)' isConstructor='true'>
+   <lead>
+Constructs new {@code KeypadData} instance with the specified field
+ values.
+   </lead>
+   <description>
+Constructs new {@code KeypadData} instance with the specified field
+ values. The map keys must match to the field names. The map values will
+ be assigned to the appropriate class fields. For example, the maps can
+ be: {"type"=Integer(1)...}. That map will initialize the
+ {@link #FIELD_TYPE} field with 1.
+ <ul>
+ <li>{@link #FIELD_TYPE} - mandatory field. The value type must be
+ {@code Integer}.</li>
+ <li>{@link #FIELD_SUB_TYPE} - optional field. The value type must be
+ {@code Integer}.</li>
+ <li>{@link #FIELD_KEY_CODE} - mandatory field. The value type must be
+ {@code Integer}.</li>
+ <li>{@link #FIELD_KEY_NAME} - optional field. The value type must be
+ {@code String}.</li>
+ </ul>
+   </description>
+
+<param name='fields'>Contains the new {@code KeypadData} instance field values.</param>
+
+
+<throws name='ClassCastException'>If the field value types are not expected.</throws>
+<throws name='IllegalArgumentException'>If the event type or key code is missing
+         or invalid arguments are specified.</throws>
+<throws name='NullPointerException'>If the fields map is {@code null}.</throws>
+
+
+    <parameter name='fields' dimension='' typeName='Map&lt;String, ?&gt;' fqn='java.util.Map' varargs='false'/>
+     </method>
+    <method name='KeypadData' fqn='org.osgi.service.dal.functions.data.KeypadData.KeypadData' qn='KeypadData.KeypadData(long,Map,int,int,int,String)' package='org.osgi.service.dal.functions.data' typeArgs='' modifiers='public' signature='(long,java.util.Map&lt;java.lang.String,java.lang.Object&gt;,int,int,int,java.lang.String)' flatSignature='(long,Map,int,int,int,String)' isConstructor='true'>
+   <lead>
+Constructs new {@code KeypadData} instance with the specified arguments.
+   </lead>
+   <description>
+Constructs new {@code KeypadData} instance with the specified arguments.
+   </description>
+
+<param name='timestamp'>The data timestamp optional field.</param>
+<param name='metadata'>The data metadata optional field.</param>
+<param name='type'>The data event type mandatory field.</param>
+<param name='subType'>The data event sub-type optional field or {@code 0} if
+        there is no sub-type.</param>
+<param name='keyCode'>The data key code mandatory field.</param>
+<param name='keyName'>The data key name optional field or {@code null} if there
+        is no key name.</param>
+
+
+
+
+    <parameter name='timestamp' dimension='' typeName='long' fqn='long' varargs='false'/>
+    <parameter name='metadata' dimension='' typeName='Map&lt;String, Object&gt;' fqn='java.util.Map' varargs='false'/>
+    <parameter name='type' dimension='' typeName='int' fqn='int' varargs='false'/>
+    <parameter name='subType' dimension='' typeName='int' fqn='int' varargs='false'/>
+    <parameter name='keyCode' dimension='' typeName='int' fqn='int' varargs='false'/>
+    <parameter name='keyName' dimension='' typeName='String' fqn='java.lang.String' varargs='false'/>
+     </method>
+    <method name='getType' fqn='org.osgi.service.dal.functions.data.KeypadData.getType' qn='KeypadData.getType()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns the event type.
+   </lead>
+   <description>
+Returns the event type. The type represents the main reason for this
+ event. It can be one of:
+ <ul>
+ <li>{@link #TYPE_PRESSED}</li>
+ <li>{@link #TYPE_RELEASED}</li>
+ </ul>
+   </description>
+
+
+<return>The event type.</return>
+
+
+
+     </method>
+    <method name='getSubType' fqn='org.osgi.service.dal.functions.data.KeypadData.getSubType' qn='KeypadData.getSubType()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns the event sub-type.
+   </lead>
+   <description>
+Returns the event sub-type. The sub-type provides additional details
+ about the event. The sub-type can be one of:
+ <ul>
+ <li>{@link #SUB_TYPE_PRESSED_NORMAL}</li>
+ <li>{@link #SUB_TYPE_PRESSED_LONG}</li>
+ <li>{@link #SUB_TYPE_PRESSED_DOUBLE}</li>
+ <li>{@link #SUB_TYPE_PRESSED_DOUBLE_LONG}</li>
+ <li>custom sub-type</li>
+ </ul>
+ Zero and positive values are reserved for this definition and further
+ extensions of the sub-types. Custom sub-types can be used only as
+ negative values to prevent potential collisions.
+   </description>
+
+
+<return>The event sub-type.</return>
+
+
+
+     </method>
+    <method name='getKeyCode' fqn='org.osgi.service.dal.functions.data.KeypadData.getKeyCode' qn='KeypadData.getKeyCode()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+The code of the key.
+   </lead>
+   <description>
+The code of the key. This field is mandatory and it holds the
+ semantics(meaning) of the key.
+   </description>
+
+
+<return>The key code.</return>
+
+
+
+     </method>
+    <method name='getKeyName' fqn='org.osgi.service.dal.functions.data.KeypadData.getKeyName' qn='KeypadData.getKeyName()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='String' qualifiedTypeName='java.lang.String' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Represents a human readable name of the corresponding key code.
+   </lead>
+   <description>
+Represents a human readable name of the corresponding key code. This
+ field is optional and sometimes it could be missed(might be {@code null}
+ ).
+   </description>
+
+
+<return>A string with the name of the key or {@code null} if not
+         specified.</return>
+
+
+
+     </method>
+    <method name='equals' fqn='org.osgi.service.dal.functions.data.KeypadData.equals' qn='KeypadData.equals(Object)' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='boolean' qualifiedTypeName='boolean' typeArgs='' dimension='' signature='(java.lang.Object)' flatSignature='(Object)'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Two {@code KeypadData} instances are equal if they contain equal
+ metadata, timestamp, event type, key code and key name.
+   </lead>
+   <description>
+Two {@code KeypadData} instances are equal if they contain equal
+ metadata, timestamp, event type, key code and key name.
+   </description>
+
+<param name='o'>The object to compare this data.</param>
+
+<return>{@code true} if this object is equivalent to the specified one.</return>
+
+
+<a href='#org.osgi.service.dal.FunctionData.equals(java.lang.Object)'>org.osgi.service.dal.FunctionData.equals(java.lang.Object)</a>
+    <parameter name='o' dimension='' typeName='Object' fqn='java.lang.Object' varargs='false'/>
+     </method>
+    <method name='hashCode' fqn='org.osgi.service.dal.functions.data.KeypadData.hashCode' qn='KeypadData.hashCode()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='()' flatSignature='()'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Returns the hash code for this {@code KeypadData} object.
+   </lead>
+   <description>
+Returns the hash code for this {@code KeypadData} object. The hash code
+ is a sum of {@link FunctionData#hashCode()}, {@link String#hashCode()},
+ event type, event sub-type and key code, where {@link String#hashCode()}
+ represents the key name hash code if available.
+   </description>
+
+
+<return>The hash code of this {@code LevelData} object.</return>
+
+
+<a href='#org.osgi.service.dal.FunctionData.hashCode()'>org.osgi.service.dal.FunctionData.hashCode()</a>
+     </method>
+    <method name='compareTo' fqn='org.osgi.service.dal.functions.data.KeypadData.compareTo' qn='KeypadData.compareTo(Object)' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='(java.lang.Object)' flatSignature='(Object)'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Compares this {@code KeypadData} instance with the given argument.
+   </lead>
+   <description>
+Compares this {@code KeypadData} instance with the given argument. If the
+ argument is not {@code KeypadData}, it throws {@code ClassCastException}.
+ Otherwise, this method returns:
+ <ul>
+ <li>{@code -1} if this instance field is less than a field of the
+ specified argument.</li>
+ <li>{@code 0} if all fields are equivalent.</li>
+ <li>{@code 1} if this instance field is greater than a field of the
+ specified argument.</li>
+ </ul>
+ The fields are compared in this order: timestamp, metadata, type,
+ sub-type, key code, key name.
+   </description>
+
+<param name='o'>{@code KeypadData} to be compared.</param>
+
+<return>{@code -1}, {@code 0} or {@code 1} depending on the comparison
+         rules.</return>
+
+<throws name='ClassCastException'>If the method argument is not of type
+         {@code KeypadData}.</throws>
+
+<a href='#java.lang.Comparable.compareTo(java.lang.Object)'>java.lang.Comparable.compareTo(java.lang.Object)</a>
+    <parameter name='o' dimension='' typeName='Object' fqn='java.lang.Object' varargs='false'/>
+     </method>
+    <method name='toString' fqn='org.osgi.service.dal.functions.data.KeypadData.toString' qn='KeypadData.toString()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='String' qualifiedTypeName='java.lang.String' typeArgs='' dimension='' signature='()' flatSignature='()'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Returns the string representation of this keypad data.
+   </lead>
+   <description>
+Returns the string representation of this keypad data.
+   </description>
+
+
+<return>The string representation of this keypad data.</return>
+
+
+
+     </method>
+    <field name='FIELD_TYPE' fqn='org.osgi.service.dal.functions.data.KeypadData.FIELD_TYPE' qn='KeypadData.FIELD_TYPE' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"type"'>
+   <lead>
+Represents the event type field name.
+   </lead>
+   <description>
+Represents the event type field name. The field value is available with
+ {@link #getType()}. The field type is {@code int}. The constant can be
+ used as a key to {@link #KeypadData(Map)}.
+   </description>
+
+     </field>
+    <field name='FIELD_SUB_TYPE' fqn='org.osgi.service.dal.functions.data.KeypadData.FIELD_SUB_TYPE' qn='KeypadData.FIELD_SUB_TYPE' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"subType"'>
+   <lead>
+Represents the event sub-type field name.
+   </lead>
+   <description>
+Represents the event sub-type field name. The field value is available
+ with {@link #getSubType()}. The field type is {@code int}. The constant
+ can be used as a key to {@link #KeypadData(Map)}.
+   </description>
+
+     </field>
+    <field name='FIELD_KEY_CODE' fqn='org.osgi.service.dal.functions.data.KeypadData.FIELD_KEY_CODE' qn='KeypadData.FIELD_KEY_CODE' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"keyCode"'>
+   <lead>
+Represents the key code field name.
+   </lead>
+   <description>
+Represents the key code field name. The field value is available with
+ {@link #getKeyCode()}. The field type is {@code int} . The constant can
+ be used as a key to {@link #KeypadData(Map)}.
+   </description>
+
+     </field>
+    <field name='FIELD_KEY_NAME' fqn='org.osgi.service.dal.functions.data.KeypadData.FIELD_KEY_NAME' qn='KeypadData.FIELD_KEY_NAME' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"keyName"'>
+   <lead>
+Represents the key name field name.
+   </lead>
+   <description>
+Represents the key name field name. The field value is available with
+ {@link #getKeyName()}. The field type is {@code String}. The constant can
+ be used as a key to {@link #KeypadData(Map)}.
+   </description>
+
+     </field>
+    <field name='TYPE_PRESSED' fqn='org.osgi.service.dal.functions.data.KeypadData.TYPE_PRESSED' qn='KeypadData.TYPE_PRESSED' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='0'>
+   <lead>
+Represents a keypad event type for a key pressed event.
+   </lead>
+   <description>
+Represents a keypad event type for a key pressed event.
+   </description>
+
+     </field>
+    <field name='TYPE_RELEASED' fqn='org.osgi.service.dal.functions.data.KeypadData.TYPE_RELEASED' qn='KeypadData.TYPE_RELEASED' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='1'>
+   <lead>
+Represents a keypad event type for a key released event.
+   </lead>
+   <description>
+Represents a keypad event type for a key released event.
+   </description>
+
+     </field>
+    <field name='SUB_TYPE_PRESSED_NORMAL' fqn='org.osgi.service.dal.functions.data.KeypadData.SUB_TYPE_PRESSED_NORMAL' qn='KeypadData.SUB_TYPE_PRESSED_NORMAL' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='1'>
+   <lead>
+Represents a keypad event sub-type for a normal key pressed event.
+   </lead>
+   <description>
+Represents a keypad event sub-type for a normal key pressed event.
+ Usually, there is a single press and the key is not held down. This
+ sub-type is used with {@link #TYPE_PRESSED} type.
+   </description>
+
+     </field>
+    <field name='SUB_TYPE_PRESSED_LONG' fqn='org.osgi.service.dal.functions.data.KeypadData.SUB_TYPE_PRESSED_LONG' qn='KeypadData.SUB_TYPE_PRESSED_LONG' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='2'>
+   <lead>
+Represents a keypad event sub-type for a long key pressed event.
+   </lead>
+   <description>
+Represents a keypad event sub-type for a long key pressed event. Usually,
+ there is a single press and the key is held down. This sub-type is used
+ with {@link #TYPE_PRESSED} type.
+   </description>
+
+     </field>
+    <field name='SUB_TYPE_PRESSED_DOUBLE' fqn='org.osgi.service.dal.functions.data.KeypadData.SUB_TYPE_PRESSED_DOUBLE' qn='KeypadData.SUB_TYPE_PRESSED_DOUBLE' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='3'>
+   <lead>
+Represents a keypad event sub-type for a double key pressed event.
+   </lead>
+   <description>
+Represents a keypad event sub-type for a double key pressed event.
+ Usually, there are two press actions and the key is not held down after
+ the second press. This sub-type is used with {@link #TYPE_PRESSED} type.
+   </description>
+
+     </field>
+    <field name='SUB_TYPE_PRESSED_DOUBLE_LONG' fqn='org.osgi.service.dal.functions.data.KeypadData.SUB_TYPE_PRESSED_DOUBLE_LONG' qn='KeypadData.SUB_TYPE_PRESSED_DOUBLE_LONG' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='4'>
+   <lead>
+Represents a keypad event sub-type for a double long key pressed event.
+   </lead>
+   <description>
+Represents a keypad event sub-type for a double long key pressed event.
+ Usually, there are two press actions and the key is held down after the
+ second press. This sub-type is used with {@link #TYPE_PRESSED} type.
+   </description>
+
+     </field>
+  </class>
+  <class name='LevelData' fqn='org.osgi.service.dal.functions.data.LevelData' qn='LevelData' package='org.osgi.service.dal.functions.data' typeParam='' modifiers='public class' superclass='FunctionData' kind='CLASS'>
+   <lead>
+Function level data wrapper.
+   </lead>
+   <description>
+Function level data wrapper. It supports all properties defined in
+ {@code FunctionData}.
+   </description>
+<a href='#MultiLevelControl'>MultiLevelControl</a><a href='#MultiLevelSensor'>MultiLevelSensor</a><a href='#Meter'>Meter</a><a href='#FunctionData'>FunctionData</a>
+    <method name='LevelData' fqn='org.osgi.service.dal.functions.data.LevelData.LevelData' qn='LevelData.LevelData(Map)' package='org.osgi.service.dal.functions.data' typeArgs='' modifiers='public' signature='(java.util.Map&lt;java.lang.String,?&gt;)' flatSignature='(Map)' isConstructor='true'>
+   <lead>
+Constructs new {@code LevelData} instance with the specified field
+ values.
+   </lead>
+   <description>
+Constructs new {@code LevelData} instance with the specified field
+ values. The map keys must match to the field names. The map values will
+ be assigned to the appropriate class fields. For example, the maps can
+ be: {"level"=BigDecimal(1)...}. That map will initialize the
+ {@link #FIELD_LEVEL} field with 1.
+ <ul>
+ <li>{@link #FIELD_LEVEL} - mandatory field. The value type must be
+ {@code BigDecimal}.</li>
+ <li>{@link #FIELD_UNIT} - optional field. The value type must be
+ {@code String}.</li>
+ </ul>
+   </description>
+
+<param name='fields'>Contains the new {@code LevelData} instance field values.</param>
+
+
+<throws name='ClassCastException'>If the field value types are not expected.</throws>
+<throws name='IllegalArgumentException'>If the level is missing.</throws>
+<throws name='NullPointerException'>If the fields map is {@code null}.</throws>
+
+
+    <parameter name='fields' dimension='' typeName='Map&lt;String, ?&gt;' fqn='java.util.Map' varargs='false'/>
+     </method>
+    <method name='LevelData' fqn='org.osgi.service.dal.functions.data.LevelData.LevelData' qn='LevelData.LevelData(long,Map,BigDecimal,String)' package='org.osgi.service.dal.functions.data' typeArgs='' modifiers='public' signature='(long,java.util.Map&lt;java.lang.String,java.lang.Object&gt;,java.math.BigDecimal,java.lang.String)' flatSignature='(long,Map,BigDecimal,String)' isConstructor='true'>
+   <lead>
+Constructs new {@code LevelData} instance with the specified arguments.
+   </lead>
+   <description>
+Constructs new {@code LevelData} instance with the specified arguments.
+   </description>
+
+<param name='timestamp'>The data timestamp optional field.</param>
+<param name='metadata'>The data metadata optional field.</param>
+<param name='level'>The level value mandatory field.</param>
+<param name='unit'>The data unit optional field.</param>
+
+
+<throws name='NullPointerException'>If {@code level} is {@code null}.</throws>
+
+
+    <parameter name='timestamp' dimension='' typeName='long' fqn='long' varargs='false'/>
+    <parameter name='metadata' dimension='' typeName='Map&lt;String, Object&gt;' fqn='java.util.Map' varargs='false'/>
+    <parameter name='level' dimension='' typeName='BigDecimal' fqn='java.math.BigDecimal' varargs='false'/>
+    <parameter name='unit' dimension='' typeName='String' fqn='java.lang.String' varargs='false'/>
+     </method>
+    <method name='getLevel' fqn='org.osgi.service.dal.functions.data.LevelData.getLevel' qn='LevelData.getLevel()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='BigDecimal' qualifiedTypeName='java.math.BigDecimal' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns {@code LevelData} value.
+   </lead>
+   <description>
+Returns {@code LevelData} value. The value type is {@code BigDecimal}
+ instead of {@code double} to guarantee value accuracy.
+   </description>
+
+
+<return>The {@code LevelData} value.</return>
+
+
+
+     </method>
+    <method name='getUnit' fqn='org.osgi.service.dal.functions.data.LevelData.getUnit' qn='LevelData.getUnit()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='String' qualifiedTypeName='java.lang.String' typeArgs='' dimension='' signature='()' flatSignature='()'>
+   <lead>
+Returns {@code LevelData} unit as it's specified in
+ {@link PropertyMetadata#UNITS} or {@code null} if the unit is missing.
+   </lead>
+   <description>
+Returns {@code LevelData} unit as it's specified in
+ {@link PropertyMetadata#UNITS} or {@code null} if the unit is missing.
+   </description>
+
+
+<return>The value unit or {@code null} if the unit is missing.</return>
+
+
+
+     </method>
+    <method name='equals' fqn='org.osgi.service.dal.functions.data.LevelData.equals' qn='LevelData.equals(Object)' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='boolean' qualifiedTypeName='boolean' typeArgs='' dimension='' signature='(java.lang.Object)' flatSignature='(Object)'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Two {@code LevelData} instances are equal if they contain equal metadata,
+ timestamp, unit and level.
+   </lead>
+   <description>
+Two {@code LevelData} instances are equal if they contain equal metadata,
+ timestamp, unit and level.
+   </description>
+
+<param name='o'>The object to compare this data.</param>
+
+<return>{@code true} if this object is equivalent to the specified one.</return>
+
+
+<a href='#org.osgi.service.dal.FunctionData.equals(java.lang.Object)'>org.osgi.service.dal.FunctionData.equals(java.lang.Object)</a>
+    <parameter name='o' dimension='' typeName='Object' fqn='java.lang.Object' varargs='false'/>
+     </method>
+    <method name='hashCode' fqn='org.osgi.service.dal.functions.data.LevelData.hashCode' qn='LevelData.hashCode()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='()' flatSignature='()'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Returns the hash code for this {@code LevelData} object.
+   </lead>
+   <description>
+Returns the hash code for this {@code LevelData} object. The hash code is
+ a sum of {@link FunctionData#hashCode()}, {@link String#hashCode()} and
+ {@link BigDecimal#hashCode()}, where {@link String#hashCode()} represents
+ the unit hash code and {@link BigDecimal#hashCode()} represents the level
+ hash code.
+   </description>
+
+
+<return>The hash code of this {@code LevelData} object.</return>
+
+
+<a href='#org.osgi.service.dal.FunctionData.hashCode()'>org.osgi.service.dal.FunctionData.hashCode()</a>
+     </method>
+    <method name='compareTo' fqn='org.osgi.service.dal.functions.data.LevelData.compareTo' qn='LevelData.compareTo(Object)' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='int' qualifiedTypeName='int' typeArgs='' dimension='' signature='(java.lang.Object)' flatSignature='(Object)'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Compares this {@code LevelData} instance with the given argument.
+   </lead>
+   <description>
+Compares this {@code LevelData} instance with the given argument. If the
+ argument is not {@code LevelData}, it throws {@code ClassCastException}.
+ Otherwise, this method returns:
+ <ul>
+ <li>{@code -1} if this instance field is less than a field of the
+ specified argument.</li>
+ <li>{@code 0} if all fields are equivalent.</li>
+ <li>{@code 1} if this instance field is greater than a field of the
+ specified argument.</li>
+ </ul>
+ The fields are compared in this order: timestamp, metadata, level, unit.
+   </description>
+
+<param name='o'>{@code LevelData} to be compared.</param>
+
+<return>{@code -1}, {@code 0} or {@code 1} depending on the comparison
+         rules.</return>
+
+<throws name='ClassCastException'>If the method argument is not of type
+         {@code LevelData}.</throws>
+
+<a href='#java.lang.Comparable.compareTo(java.lang.Object)'>java.lang.Comparable.compareTo(java.lang.Object)</a>
+    <parameter name='o' dimension='' typeName='Object' fqn='java.lang.Object' varargs='false'/>
+     </method>
+    <method name='toString' fqn='org.osgi.service.dal.functions.data.LevelData.toString' qn='LevelData.toString()' package='org.osgi.service.dal.functions.data' modifiers='public' typeName='String' qualifiedTypeName='java.lang.String' typeArgs='' dimension='' signature='()' flatSignature='()'>
+<java.lang.Override></java.lang.Override>
+   <lead>
+Returns the string representation of this level data.
+   </lead>
+   <description>
+Returns the string representation of this level data.
+   </description>
+
+
+<return>The string representation of this level data.</return>
+
+
+
+     </method>
+    <field name='FIELD_LEVEL' fqn='org.osgi.service.dal.functions.data.LevelData.FIELD_LEVEL' qn='LevelData.FIELD_LEVEL' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"level"'>
+   <lead>
+Represents the level field name.
+   </lead>
+   <description>
+Represents the level field name. The field value is available with
+ {@link #getLevel()}. The field type is {@code BigDecimal}. The constant
+ can be used as a key to {@link #LevelData(Map)}.
+   </description>
+
+     </field>
+    <field name='FIELD_UNIT' fqn='org.osgi.service.dal.functions.data.LevelData.FIELD_UNIT' qn='LevelData.FIELD_UNIT' package='org.osgi.service.dal.functions.data' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"unit"'>
+   <lead>
+Represents the unit field name.
+   </lead>
+   <description>
+Represents the unit field name. The field value is available with
+ {@link #getUnit()}. The field type is {@code String}. The constant can be
+ used as a key to {@link #LevelData(Map)}.
+   </description>
+
+     </field>
+  </class>
+  </package>
+</top>

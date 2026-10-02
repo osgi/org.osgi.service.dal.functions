@@ -1,0 +1,1663 @@
+<section xmlns="http://docbook.org/ns/docbook"
+         xreflabel="org.osgi.service.dal.functions"
+         version="5"
+         role="package"
+         xml:id="org.osgi.service.dal.functions">
+   <title>org.osgi.service.dal.functions</title>
+   <info>
+      <releaseinfo xml:id="org.osgi.service.dal.functions-version">Version 1.0</releaseinfo>
+      <edition xml:id="org.osgi.service.dal.functions-version.number">1.0</edition>
+   </info>
+   <para>
+Device Abstraction Layer Functions Package 1.0.
+ 
+ </para>
+   <para>
+ Bundles wishing to use this package must list the package in the
+ Import-Package header of the bundle's manifest. This package has two types of
+ users: the consumers that use the API in this package and the providers that
+ implement the API in this package.
+ 
+ </para>
+   <para>
+ Example import for consumers using the API in this package:
+ </para>
+   <para>
+ {@code  Import-Package: org.osgi.service.dal.functions; version="[1.0,2.0)"}
+ </para>
+   <para>
+ Example import for providers implementing the API in this package:
+ </para>
+   <para>
+ {@code  Import-Package: org.osgi.service.dal.functions; version="[1.0,1.1)"}</para>
+   <section role="summary">
+      <title>Summary</title>
+      <itemizedlist>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.Alarm">
+                  <code>Alarm</code>
+               </link> - 
+{@code Alarm} function provides alarm sensor support.
+   </para>
+         </listitem>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.BooleanControl">
+                  <code>BooleanControl</code>
+               </link> - 
+{@code BooleanControl} function provides a boolean control support.
+   </para>
+         </listitem>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.BooleanSensor">
+                  <code>BooleanSensor</code>
+               </link> - 
+{@code BooleanSensor} function provides boolean sensor monitoring.
+   </para>
+         </listitem>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.Keypad">
+                  <code>Keypad</code>
+               </link> - 
+{@code Keypad} function provides support for keypad control.
+   </para>
+         </listitem>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.Meter">
+                  <code>Meter</code>
+               </link> - 
+{@code Meter} function can measure metering information.
+   </para>
+         </listitem>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.MultiLevelControl">
+                  <code>MultiLevelControl</code>
+               </link> - 
+{@code MultiLevelControl} function provides multi-level control support.
+   </para>
+         </listitem>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.MultiLevelSensor">
+                  <code>MultiLevelSensor</code>
+               </link> - 
+{@code MultiLevelSensor} function provides multi-level sensor monitoring.
+   </para>
+         </listitem>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.Types">
+                  <code>Types</code>
+               </link> - 
+Shares common constants for all functions defined in this package.
+   </para>
+         </listitem>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.WakeUp">
+                  <code>WakeUp</code>
+               </link> - 
+{@code WakeUp} function provides device awake monitoring.
+   </para>
+         </listitem>
+      </itemizedlist>
+   </section>
+   <section xreflabel="Alarm"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.Alarm">
+      <title>public abstract Alarm<?line-break?> extends Function</title>
+      <para>
+{@code Alarm} function provides alarm sensor support. There is only one
+ eventable property and no operations.
+   </para>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">AlarmData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="PROPERTY_ALARM"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Alarm.PROPERTY_ALARM">
+         <title>public static final String PROPERTY_ALARM = "alarm"</title>
+         <para>
+Specifies the alarm property name. The property is eventable.
+   </para>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">AlarmData</link>
+            </para>
+         </formalpara>
+      </section>
+   </section>
+   <section xreflabel="BooleanControl"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.BooleanControl">
+      <title>public abstract BooleanControl<?line-break?> extends Function</title>
+      <para>
+{@code BooleanControl} function provides a boolean control support. The
+ eventable function state is accessible with {@link #getData()} getter and
+ {@link #setData(boolean)} setter. The state can be reversed with
+ {@link #inverse()} method, can be set to {@code true} value with
+ {@link #setTrue()} method and can be set to {@code false} value with
+ {@link #setFalse()} method.
+ </para>
+      <para>
+ The control type can be:
+ </para>
+      <itemizedlist>
+         <listitem>
+            <para>{@link Types#LIGHT}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#DOOR}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#WINDOW}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#POWER}</para>
+         </listitem>
+         <listitem>
+            <para>other type defined in {@link Types}</para>
+         </listitem>
+         <listitem>
+            <para>custom - vendor specific type</para>
+         </listitem>
+      </itemizedlist>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">BooleanData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="OPERATION_INVERSE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.BooleanControl.OPERATION_INVERSE">
+         <title>public static final String OPERATION_INVERSE = "inverse"</title>
+         <para>
+Specifies the inverse operation name. The operation can be executed with
+ {@link #inverse()} method.
+   </para>
+      </section>
+      <section xreflabel="OPERATION_SET_FALSE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.BooleanControl.OPERATION_SET_FALSE">
+         <title>public static final String OPERATION_SET_FALSE = "setFalse"</title>
+         <para>
+Specifies the operation name, which sets the control state to
+ {@code false} value. The operation can be executed with
+ {@link #setFalse()} method.
+   </para>
+      </section>
+      <section xreflabel="OPERATION_SET_TRUE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.BooleanControl.OPERATION_SET_TRUE">
+         <title>public static final String OPERATION_SET_TRUE = "setTrue"</title>
+         <para>
+Specifies the operation name, which sets the control state to
+ {@code true} value. The operation can be executed with {@link #setTrue()}
+ method.
+   </para>
+      </section>
+      <section xreflabel="PROPERTY_DATA"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.BooleanControl.PROPERTY_DATA">
+         <title>public static final String PROPERTY_DATA = "data"</title>
+         <para>
+Specifies the state property name. The eventable property value is
+ accessible with {@link #getData()} method.
+   </para>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">BooleanData</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="getData()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.BooleanControl.getData--">
+         <title>public abstract BooleanData getData() throws DeviceException</title>
+         <para role="description">
+Returns the current state of {@code BooleanControl}. It's a getter method
+ for {@link #PROPERTY_DATA} property.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The current state of {@code BooleanControl}.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">BooleanData</link>, <link linkend="org.osgi.service.dal.functions.BooleanControl.PROPERTY_DATA">BooleanControl.PROPERTY_DATA</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="inverse()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.BooleanControl.inverse--">
+         <title>public abstract void inverse() throws DeviceException</title>
+         <para role="description">
+Reverses the {@code BooleanControl} state. If the current state
+ represents {@code true} value, it'll be changed to {@code false}. If the
+ current state represents {@code false} value, it'll be changed to
+ {@code true}. The operation name is {@link #OPERATION_INVERSE}.
+   </para>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="setData(boolean)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.BooleanControl.setData-boolean-">
+         <title>public abstract void setData(boolean data) throws DeviceException</title>
+         <formalpara role="parameter">
+            <title>data</title>
+            <para>The new function value.</para>
+         </formalpara>
+         <para role="description">
+Sets the {@code BooleanControl} state to the specified value. It's setter
+ method for {@link #PROPERTY_DATA} property.
+   </para>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalArgumentException</code>– If there is an invalid argument.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.BooleanControl.PROPERTY_DATA">BooleanControl.PROPERTY_DATA</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="setFalse()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.BooleanControl.setFalse--">
+         <title>public abstract void setFalse() throws DeviceException</title>
+         <para role="description">
+Sets the {@code BooleanControl} state to {@code false} value. The
+ operation name is {@link #OPERATION_SET_FALSE}.
+   </para>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="setTrue()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.BooleanControl.setTrue--">
+         <title>public abstract void setTrue() throws DeviceException</title>
+         <para role="description">
+Sets the {@code BooleanControl} state to {@code true} value. The
+ operation name is {@link #OPERATION_SET_TRUE}.
+   </para>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+      </section>
+   </section>
+   <section xreflabel="BooleanSensor"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.BooleanSensor">
+      <title>public abstract BooleanSensor<?line-break?> extends Function</title>
+      <para>
+{@code BooleanSensor} function provides boolean sensor monitoring. It reports
+ its state when an important event is available. The eventable state is
+ accessible with {@link #getData()} getter. There are no operations.
+ </para>
+      <para>
+ The sensor type can be:
+ </para>
+      <itemizedlist>
+         <listitem>
+            <para>{@link Types#LIGHT}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#GAS}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#SMOKE}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#DOOR}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#WINDOW}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#POWER}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#RAIN}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#CONTACT}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#FIRE}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#OCCUPANCY}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#WATER}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#MOTION}</para>
+         </listitem>
+         <listitem>
+            <para>other type defined in {@link Types}</para>
+         </listitem>
+         <listitem>
+            <para>custom - vendor specific type</para>
+         </listitem>
+      </itemizedlist>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">BooleanData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="PROPERTY_DATA"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.BooleanSensor.PROPERTY_DATA">
+         <title>public static final String PROPERTY_DATA = "data"</title>
+         <para>
+Specifies the state property name. The eventable property value is
+ accessible with {@link #getData()} getter.
+   </para>
+      </section>
+      <section xreflabel="getData()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.BooleanSensor.getData--">
+         <title>public abstract BooleanData getData() throws DeviceException</title>
+         <para role="description">
+Returns the {@code BooleanSensor} current state. It's a getter method for
+ {@link #PROPERTY_DATA} property.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The {@code BooleanSensor} current state.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">BooleanData</link>
+            </para>
+         </formalpara>
+      </section>
+   </section>
+   <section xreflabel="Keypad"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.Keypad">
+      <title>public abstract Keypad<?line-break?> extends Function</title>
+      <para>
+{@code Keypad} function provides support for keypad control. The keypad
+ typically consists of one or more keys/buttons, which can be discerned.
+ Different types of key presses like short and long press can typically also
+ be detected. Each key pressed event is followed by a key released event. It's
+ not possible to have two consecutive key pressed or key released events.
+ There is only one eventable property and no operations.
+ </para>
+      <para>
+ {@code Keypad} can enumerate all supported keys in the key property metadata,
+ {@link PropertyMetadata#getEnumValues(String)}.</para>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">KeypadData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="PROPERTY_KEY"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Keypad.PROPERTY_KEY">
+         <title>public static final String PROPERTY_KEY = "key"</title>
+         <para>
+Specifies a property name for a key from the keypad. The property is
+ eventable.
+   </para>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">KeypadData</link>
+            </para>
+         </formalpara>
+      </section>
+   </section>
+   <section xreflabel="Meter"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.Meter">
+      <title>public abstract Meter<?line-break?> extends Function</title>
+      <para>
+{@code Meter} function can measure metering information. The function
+ provides these properties:
+ </para>
+      <itemizedlist>
+         <listitem>
+            <para>{@link #PROPERTY_CURRENT} - eventable property accessible with
+ {@link #getCurrent()} getter;</para>
+         </listitem>
+         <listitem>
+            <para>{@link #PROPERTY_TOTAL} - eventable property accessible with
+ {@link #getTotal()} getter.</para>
+         </listitem>
+      </itemizedlist>
+      <para>
+ The sensor type can be:
+ </para>
+      <itemizedlist>
+         <listitem>
+            <para>{@link Types#PRESSURE}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#GAS}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#POWER}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#WATER}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#HEAT}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#COLD}</para>
+         </listitem>
+         <listitem>
+            <para>other type defined in {@link Types}</para>
+         </listitem>
+         <listitem>
+            <para>custom - vendor specific type</para>
+         </listitem>
+      </itemizedlist>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">LevelData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="FLOW_IN"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Meter.FLOW_IN">
+         <title>public static final String FLOW_IN = "in"</title>
+         <para>
+Represents the metering consumption flow. It can be used as
+ {@link #SERVICE_FLOW} property value.
+   </para>
+      </section>
+      <section xreflabel="FLOW_OUT"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Meter.FLOW_OUT">
+         <title>public static final String FLOW_OUT = "out"</title>
+         <para>
+Represents the metering production flow. It can be used as
+ {@link #SERVICE_FLOW} property value.
+   </para>
+      </section>
+      <section xreflabel="PROPERTY_CURRENT"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Meter.PROPERTY_CURRENT">
+         <title>public static final String PROPERTY_CURRENT = "current"</title>
+         <para>
+Specifies the current consumption or production property name. The
+ eventable property can be read with {@link #getCurrent()} getter.
+   </para>
+      </section>
+      <section xreflabel="PROPERTY_TOTAL"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Meter.PROPERTY_TOTAL">
+         <title>public static final String PROPERTY_TOTAL = "total"</title>
+         <para>
+Specifies the total consumption or production property name. The
+ eventable property can be read with {@link #getTotal()} getter.
+   </para>
+      </section>
+      <section xreflabel="SERVICE_FLOW"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Meter.SERVICE_FLOW">
+         <title>public static final String SERVICE_FLOW = "dal.meter.flow"</title>
+         <para>
+The service property value contains the metering flow. It's an optional
+ property and available only if it's supported by the meter. The value
+ type is {@code java.lang.String}. Possible property values:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@link #FLOW_IN}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #FLOW_OUT}</para>
+            </listitem>
+         </itemizedlist>
+      </section>
+      <section xreflabel="getCurrent()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.Meter.getCurrent--">
+         <title>public abstract LevelData getCurrent() throws DeviceException</title>
+         <para role="description">
+Returns the current metering info. It's a getter method for
+ {@link #PROPERTY_CURRENT} property.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The current metering info.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">LevelData</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="getTotal()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.Meter.getTotal--">
+         <title>public abstract LevelData getTotal() throws DeviceException</title>
+         <para role="description">
+Returns the total metering info. It's a getter method for
+ {@link #PROPERTY_TOTAL} property.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The total metering info.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">LevelData</link>
+            </para>
+         </formalpara>
+      </section>
+   </section>
+   <section xreflabel="MultiLevelControl"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.MultiLevelControl">
+      <title>public abstract MultiLevelControl<?line-break?> extends Function</title>
+      <para>
+{@code MultiLevelControl} function provides multi-level control support. The
+ eventable function level is accessible with {@link #getData()} getter and
+ {@link #setData(BigDecimal, String)} setter.
+ </para>
+      <para>
+ The control type can be:
+ </para>
+      <itemizedlist>
+         <listitem>
+            <para>{@link Types#LIGHT}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#TEMPERATURE}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#FLOW}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#PRESSURE}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#HUMIDITY}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#GAS}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#SMOKE}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#DOOR}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#WINDOW}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#LIQUID}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#POWER}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#NOISINESS}</para>
+         </listitem>
+         <listitem>
+            <para>other type defined in {@link Types}</para>
+         </listitem>
+         <listitem>
+            <para>custom - vendor specific type</para>
+         </listitem>
+      </itemizedlist>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">LevelData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="PROPERTY_DATA"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.MultiLevelControl.PROPERTY_DATA">
+         <title>public static final String PROPERTY_DATA = "data"</title>
+         <para>
+Specifies the level property name. The eventable property can be read
+ with {@link #getData()} getter and can be set with
+ {@link #setData(BigDecimal, String)} setters.
+   </para>
+      </section>
+      <section xreflabel="getData()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.MultiLevelControl.getData--">
+         <title>public abstract LevelData getData() throws DeviceException</title>
+         <para role="description">
+Returns {@code MultiLevelControl} level. It's a getter method for
+ {@link #PROPERTY_DATA} property.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>{@code MultiLevelControl} level.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">LevelData</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="setData(BigDecimal,String)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.MultiLevelControl.setData-BigDecimal-String-">
+         <title>public abstract void setData(BigDecimal level, String unit) throws DeviceException</title>
+         <formalpara role="parameter">
+            <title>level</title>
+            <para>The new control level.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>unit</title>
+            <para>The level unit.</para>
+         </formalpara>
+         <para role="description">
+Sets {@code MultiLevelControl} level according to the specified unit.
+ It's a setter method for {@link #PROPERTY_DATA} property.
+   </para>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalArgumentException</code>– If there is an invalid argument.</para>
+         </formalpara>
+      </section>
+   </section>
+   <section xreflabel="MultiLevelSensor"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.MultiLevelSensor">
+      <title>public abstract MultiLevelSensor<?line-break?> extends Function</title>
+      <para>
+{@code MultiLevelSensor} function provides multi-level sensor monitoring. It
+ reports its state when an important event is available. The eventable state
+ is accessible with {@link #getData()} getter. There are no operations.
+ </para>
+      <para>
+ The sensor type can be:
+ </para>
+      <itemizedlist>
+         <listitem>
+            <para>{@link Types#LIGHT}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#TEMPERATURE}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#FLOW}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#PRESSURE}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#HUMIDITY}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#GAS}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#SMOKE}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#DOOR}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#WINDOW}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#LIQUID}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#POWER}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#NOISINESS}</para>
+         </listitem>
+         <listitem>
+            <para>{@link Types#RAIN}</para>
+         </listitem>
+         <listitem>
+            <para>other type defined in {@link Types}</para>
+         </listitem>
+         <listitem>
+            <para>custom - vendor specific type</para>
+         </listitem>
+      </itemizedlist>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">LevelData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="PROPERTY_DATA"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.MultiLevelSensor.PROPERTY_DATA">
+         <title>public static final String PROPERTY_DATA = "data"</title>
+         <para>
+Specifies the state property name. The eventable property can be read
+ with {@link #getData()} getter.
+   </para>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">LevelData</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="getData()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.MultiLevelSensor.getData--">
+         <title>public abstract LevelData getData() throws DeviceException</title>
+         <para role="description">
+Returns the {@code MultiLevelSensor} current state. It's a getter method
+ for {@link #PROPERTY_DATA} property.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The {@code MultiLevelSensor} current state.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">LevelData</link>
+            </para>
+         </formalpara>
+      </section>
+   </section>
+   <section xreflabel="Types"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.Types">
+      <title>public abstract Types</title>
+      <para>
+Shares common constants for all functions defined in this package. The
+ defined function types are mapped as follow:
+ </para>
+      <itemizedlist>
+         <listitem>
+            <para>{@link #LIGHT} - {@link MultiLevelControl}, {@link MultiLevelSensor},
+ {@link BooleanSensor} and {@link BooleanControl}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #TEMPERATURE} - {@link MultiLevelControl} and
+ {@link MultiLevelSensor}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #FLOW} - {@link MultiLevelControl} and {@link MultiLevelSensor}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #PRESSURE} - {@link MultiLevelControl}, {@link MultiLevelSensor}
+ and {@link Meter}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #HUMIDITY} - {@link MultiLevelControl} and
+ {@link MultiLevelSensor}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #GAS} - {@link MultiLevelControl}, {@link MultiLevelSensor},
+ {@link BooleanSensor} and {@link Meter}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #SMOKE} - {@link MultiLevelControl}, {@link MultiLevelSensor} and
+ {@link BooleanSensor}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #DOOR} - {@link MultiLevelControl}, {@link MultiLevelSensor},
+ {@link BooleanSensor} and {@link BooleanControl}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #WINDOW} - {@link MultiLevelControl}, {@link MultiLevelSensor},
+ {@link BooleanSensor} and {@link BooleanControl}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #LIQUID} - {@link MultiLevelControl} and {@link MultiLevelSensor}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #POWER} - {@link MultiLevelControl}, {@link MultiLevelSensor},
+ {@link BooleanSensor}, {@link BooleanControl} and {@link Meter}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #NOISINESS} - {@link MultiLevelControl} and
+ {@link MultiLevelSensor}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #RAIN} - {@link MultiLevelSensor} and {@link BooleanSensor}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #CONTACT} - {@link BooleanSensor}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #FIRE} - {@link BooleanSensor}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #OCCUPANCY} - {@link BooleanSensor}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #WATER} - {@link BooleanSensor} and {@link Meter}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #MOTION} - {@link BooleanSensor}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #HEAT} - {@link Meter}</para>
+         </listitem>
+         <listitem>
+            <para>{@link #COLD} - {@link Meter}</para>
+         </listitem>
+      </itemizedlist>
+      <para>
+ The mapping is not mandatory. The function can use custom defined types.
+   </para>
+      <section xreflabel="COLD"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.COLD">
+         <title>public static final String COLD = "cold"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code Meter} - indicates that the {@code Meter} measures thermal energy
+ provided by a source.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="CONTACT"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.CONTACT">
+         <title>public static final String CONTACT = "contact"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect contact. {@code true} state means that there is contact.
+ {@code false} state means that there is no contact.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="DOOR"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.DOOR">
+         <title>public static final String DOOR = "door"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the door position. {@code MultiLevelControl} minimum value
+ can completely close the door. {@code MultiLevelControl} maximum value
+ can open the door to the maximum allowed position.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the door
+ position.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect the door state. {@code true} state means that the door is opened.
+ {@code false} state means that the door is closed.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code BooleanControl} - indicates that there is a door position control.
+ {@code true} state means that the door will be opened. {@code false}
+ state means that the door will be closed.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="FIRE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.FIRE">
+         <title>public static final String FIRE = "fire"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect fire. {@code true} state means that there is fire. {@code false}
+ state means that there is no fire.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="FLOW"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.FLOW">
+         <title>public static final String FLOW = "flow"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the flow level. {@code MultiLevelControl} minimum value is
+ the minimum supported flow level. {@code MultiLevelControl} maximum value
+ is the maximum supported flow level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the flow
+ level.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="GAS"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.GAS">
+         <title>public static final String GAS = "gas"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the gas level. {@code MultiLevelControl} minimum value is the
+ lowest supported gas level. {@code MultiLevelControl} maximum value is
+ the highest supported gas level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the gas
+ level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} supports
+ gas detection. {@code true} state means there is gas. {@code false} state
+ means that there is no gas.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code Meter} - indicates that the {@code Meter} measures the gas
+ consumption.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="HEAT"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.HEAT">
+         <title>public static final String HEAT = "heat"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code Meter} - indicates that the {@code Meter} measures thermal energy
+ provided by a source.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="HUMIDITY"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.HUMIDITY">
+         <title>public static final String HUMIDITY = "humidity"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the humidity level. It's typical functionality for HVAC
+ (heating, ventilation, and air conditioning) devices.
+ {@code MultiLevelControl} minimum value is the lowest supported humidity
+ level. {@code MultiLevelControl} maximum value is the highest supported
+ humidity level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ humidity level.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="LIGHT"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.LIGHT">
+         <title>public static final String LIGHT = "light"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control light devices. Usually, such devices are called dimmable.
+ {@code MultiLevelControl} minimum value can switch off the device and
+ {@code MultiLevelControl} maximum value can increase the device light to
+ the maximum possible value.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ light level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detected light. {@code true} state means that there is light.
+ {@code false} state means that there is no light.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code BooleanControl} - indicates that there is a light device control.
+ {@code true} state means that the light device will be turned on.
+ {@code false} state means that the light device will be turned off.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="LIQUID"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.LIQUID">
+         <title>public static final String LIQUID = "liquid"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the liquid level. {@code MultiLevelControl} minimum value is
+ the lowest supported liquid level. {@code MultiLevelControl} maximum
+ value is the highest supported liquid level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ liquid level.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="MOTION"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.MOTION">
+         <title>public static final String MOTION = "motion"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect motion. {@code true} state means that there is motion detection.
+ {@code false} state means that there is no motion detection.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="NOISINESS"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.NOISINESS">
+         <title>public static final String NOISINESS = "noisiness"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the noise level. {@code MultiLevelControl} minimum value is
+ the lowest supported noise level. {@code MultiLevelControl} maximum value
+ is the highest supported noise level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ noise level.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="OCCUPANCY"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.OCCUPANCY">
+         <title>public static final String OCCUPANCY = "occupancy"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect presence. {@code true} state means that someone is detected.
+ {@code false} state means that nobody is detected.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="POWER"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.POWER">
+         <title>public static final String POWER = "power"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the power level. {@code MultiLevelControl} minimum value is
+ the lowest supported power level. {@code MultiLevelControl} maximum value
+ is the highest supported power level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ power level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect power/no power. {@code true} state means that there is power.
+ {@code false} state means that there is no power.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code BooleanControl} - indicates that there is electricity control.
+ {@code true} state means that the power will be restored. {@code false}
+ state means that the power will be cut.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code Meter} - indicates that the {@code Meter} measures the power
+ consumption.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="PRESSURE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.PRESSURE">
+         <title>public static final String PRESSURE = "pressure"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the pressure level. {@code MultiLevelControl} minimum value
+ is the lowest supported pressure level. {@code MultiLevelControl} maximum
+ value is the highest supported pressure level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ pressure level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code Meter} - Indicates that the {@code Meter} measures pressure.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="RAIN"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.RAIN">
+         <title>public static final String RAIN = "rain"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the {@code MultiLevelSensor}
+ can monitor the rain rate. It's not applicable to
+ {@code MultiLevelControl}.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect rain. {@code true} state means that there is rain. {@code false}
+ state means that there is no rain.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="SMOKE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.SMOKE">
+         <title>public static final String SMOKE = "smoke"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the smoke level. {@code MultiLevelControl} minimum value is
+ the lowest supported smoke level. {@code MultiLevelControl} maximum value
+ is the highest supported smoke level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ smoke level.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect smoke. {@code true} state means that there is smoke. {@code false}
+ state means that there is no smoke.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="TEMPERATURE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.TEMPERATURE">
+         <title>public static final String TEMPERATURE = "temperature"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control temperature devices. For example, such device can be
+ thermostat. {@code MultiLevelControl} minimum value is the lowest
+ supported temperature. {@code MultiLevelControl} maximum value is the
+ highest supported temperature.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ temperature.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="WATER"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.WATER">
+         <title>public static final String WATER = "water"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ detect water leak. {@code true} state means that there is water leak.
+ {@code false} state means that there is no water leak.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code Meter} - indicates that the {@code Meter} measures water
+ consumption.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+      <section xreflabel="WINDOW"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.Types.WINDOW">
+         <title>public static final String WINDOW = "window"</title>
+         <para>
+The function type is applicable to:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>
+ {@code MultiLevelControl} - indicates that the {@code MultiLevelControl}
+ can control the window position. {@code MultiLevelControl} minimum value
+ can completely close the window. {@code MultiLevelControl} maximum value
+ can open the window to the maximum allowed position.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code MultiLevelSensor} - indicates that the sensor can monitor the
+ window position.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code BooleanSensor} - indicates that the {@code BooleanSensor} can
+ window state. {@code true} state means that the window is opened.
+ {@code false} state means that the window is closed.</para>
+            </listitem>
+            <listitem>
+               <para>
+ {@code BooleanControl} - indicates that there is a window position
+ control. {@code true} state means that the window will be opened.
+ {@code false} state means that the window will be closed.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ This type can be specified as a value of
+ {@link org.osgi.service.dal.Function#SERVICE_TYPE}.
+   </para>
+      </section>
+   </section>
+   <section xreflabel="WakeUp"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.WakeUp">
+      <title>public abstract WakeUp<?line-break?> extends Function</title>
+      <para>
+{@code WakeUp} function provides device awake monitoring. It's especially
+ applicable to battery-operated devices. Such device can notify the system
+ that it's awake and can receive commands with a {@link #PROPERTY_AWAKE}
+ property event.
+ </para>
+      <para>
+ The device can periodically wake up for commands. The interval can be managed
+ with {@link #PROPERTY_WAKE_UP_INTERVAL} property.</para>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">LevelData</link>, <link linkend="UNRESOLVED">BooleanData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="PROPERTY_AWAKE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.WakeUp.PROPERTY_AWAKE">
+         <title>public static final String PROPERTY_AWAKE = "awake"</title>
+         <para>
+Specifies the awake property name. The property access type can be
+ {@link PropertyMetadata#ACCESS_EVENTABLE}. If the device is awake, it
+ will trigger a property event.
+ </para>
+         <para>
+ The property value type is {@code BooleanData}. The boolean data is
+ always {@code true}. It marks that the device is awake.</para>
+      </section>
+      <section xreflabel="PROPERTY_WAKE_UP_INTERVAL"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.WakeUp.PROPERTY_WAKE_UP_INTERVAL">
+         <title>public static final String PROPERTY_WAKE_UP_INTERVAL = "wakeUpInterval"</title>
+         <para>
+Specifies the wake up interval. The device can periodically wake up and
+ receive commands. That interval is managed by this eventable property.
+ The current property value is available with {@link #getWakeUpInterval()}
+ and can be modified with {@link #setWakeUpInterval(BigDecimal, String)}.
+   </para>
+      </section>
+      <section xreflabel="getWakeUpInterval()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.WakeUp.getWakeUpInterval--">
+         <title>public abstract LevelData getWakeUpInterval() throws DeviceException</title>
+         <para role="description">
+Returns the current wake up interval. It's a getter method for
+ {@link #PROPERTY_WAKE_UP_INTERVAL} property. The device can periodically
+ wake up and receive command based on this interval.
+ </para>
+         <para>
+ The interval can be measured in different units like hours, minutes,
+ seconds, etc. The unit is specified in {@code LevelData} instance.</para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The current wake up interval.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">LevelData</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="setWakeUpInterval(BigDecimal,String)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.WakeUp.setWakeUpInterval-BigDecimal-String-">
+         <title>public abstract void setWakeUpInterval(BigDecimal interval, String unit) throws DeviceException</title>
+         <formalpara role="parameter">
+            <title>interval</title>
+            <para>The new wake up interval.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>unit</title>
+            <para>The interval unit. If the unit is {@code null}, the interval
+        is measured in milliseconds.</para>
+         </formalpara>
+         <para role="description">
+Sets wake up interval according to the specified unit. It's a setter
+ method for {@link #PROPERTY_WAKE_UP_INTERVAL} property. The device can
+ periodically wake up and receive command based on this interval. The unit
+ can be {@code null}, then the interval is measured in milliseconds.
+   </para>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalStateException</code>– If this function service object has already
+         been unregistered.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>DeviceException</code>– If an operation error is available.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalArgumentException</code>– If there is an invalid argument.</para>
+         </formalpara>
+      </section>
+   </section>
+</section>

@@ -1,0 +1,1319 @@
+<section xmlns="http://docbook.org/ns/docbook"
+         xreflabel="org.osgi.service.dal.functions.data"
+         version="5"
+         role="package"
+         xml:id="org.osgi.service.dal.functions.data">
+   <title>org.osgi.service.dal.functions.data</title>
+   <info>
+      <releaseinfo xml:id="org.osgi.service.dal.functions.data-version">Version 1.0</releaseinfo>
+      <edition xml:id="org.osgi.service.dal.functions.data-version.number">1.0</edition>
+   </info>
+   <para>
+Device Abstraction Layer Functions Data Package 1.0.
+ 
+ </para>
+   <para>
+ Bundles wishing to use this package must list the package in the
+ Import-Package header of the bundle's manifest. This package has two types of
+ users: the consumers that use the API in this package and the providers that
+ implement the API in this package.
+ 
+ </para>
+   <para>
+ Example import for consumers using the API in this package:
+ </para>
+   <para>
+ {@code  Import-Package: org.osgi.service.dal.functions.data; version="[1.0,2.0)"}
+ </para>
+   <para>
+ Example import for providers implementing the API in this package:
+ </para>
+   <para>
+ {@code  Import-Package: org.osgi.service.dal.functions.data; version="[1.0,1.1)"}</para>
+   <section role="summary">
+      <title>Summary</title>
+      <itemizedlist>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.data.AlarmData">
+                  <code>AlarmData</code>
+               </link> - 
+Function alarm data.
+   </para>
+         </listitem>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.data.BooleanData">
+                  <code>BooleanData</code>
+               </link> - 
+Function boolean data wrapper.
+   </para>
+         </listitem>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.data.KeypadData">
+                  <code>KeypadData</code>
+               </link> - 
+Represents a keypad event data that is collected when a change with some key
+ from the keypad has occurred.
+   </para>
+         </listitem>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.dal.functions.data.LevelData">
+                  <code>LevelData</code>
+               </link> - 
+Function level data wrapper.
+   </para>
+         </listitem>
+      </itemizedlist>
+   </section>
+   <section xreflabel="AlarmData"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.data.AlarmData">
+      <title>public class AlarmData<?line-break?> extends FunctionData</title>
+      <para>
+Function alarm data. It cares about the alarm type, severity, timestamp and
+ additional metadata. It doesn't support unit. The alarm type is mapped to
+ {@code FunctionData} value.
+   </para>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">Alarm</link>, <link linkend="UNRESOLVED">FunctionData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="FIELD_SEVERITY"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.FIELD_SEVERITY">
+         <title>public static final String FIELD_SEVERITY = "severity"</title>
+         <para>
+Represents the severity field name. The field value is available with
+ {@link #getSeverity()}. The field type is {@code int}. The constant can
+ be used as a key to {@link #AlarmData(Map)} .
+   </para>
+      </section>
+      <section xreflabel="FIELD_TYPE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.FIELD_TYPE">
+         <title>public static final String FIELD_TYPE = "type"</title>
+         <para>
+Represents the type field name. The field value is available with
+ {@link #getType()}. The field type is {@code int}. The constant can be
+ used as a key to {@link #AlarmData(Map)}.
+   </para>
+      </section>
+      <section xreflabel="SEVERITY_CRITICAL"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.SEVERITY_CRITICAL">
+         <title>public static final int SEVERITY_CRITICAL = 3</title>
+         <para>
+The severity rating indicates that there a critical alarm. The severity
+ priority is higher than {@link #SEVERITY_MINOR} and
+ {@link #SEVERITY_MAJOR}.
+   </para>
+      </section>
+      <section xreflabel="SEVERITY_MAJOR"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.SEVERITY_MAJOR">
+         <title>public static final int SEVERITY_MAJOR = 2</title>
+         <para>
+The severity rating indicates that there is a major alarm. The severity
+ priority is higher than {@link #SEVERITY_MINOR} and lower than
+ {@link #SEVERITY_CRITICAL}.
+   </para>
+      </section>
+      <section xreflabel="SEVERITY_MINOR"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.SEVERITY_MINOR">
+         <title>public static final int SEVERITY_MINOR = 1</title>
+         <para>
+The severity rating indicates that there is a minor alarm. The severity
+ priority is lower than {@link #SEVERITY_MAJOR} and
+ {@link #SEVERITY_CRITICAL}.
+   </para>
+      </section>
+      <section xreflabel="SEVERITY_UNDEFINED"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.SEVERITY_UNDEFINED">
+         <title>public static final int SEVERITY_UNDEFINED = 0</title>
+         <para>
+The severity constant indicates that there is no severity rating for this
+ alarm.
+   </para>
+      </section>
+      <section xreflabel="TYPE_ACCESS_CONTROL"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_ACCESS_CONTROL">
+         <title>public static final int TYPE_ACCESS_CONTROL = 1</title>
+         <para>
+The alarm type indicates that there is access control issue. For example,
+ the alarm can indicate that the door is unlocked.
+   </para>
+      </section>
+      <section xreflabel="TYPE_BURGLAR"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_BURGLAR">
+         <title>public static final int TYPE_BURGLAR = 2</title>
+         <para>
+The alarm type indicates that there is a burglar notification. For
+ example, the alarm can indicate that the glass is broken.
+   </para>
+      </section>
+      <section xreflabel="TYPE_COLD"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_COLD">
+         <title>public static final int TYPE_COLD = 3</title>
+         <para>
+The alarm type indicates that temperature is too low.
+   </para>
+      </section>
+      <section xreflabel="TYPE_GAS_CO"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_GAS_CO">
+         <title>public static final int TYPE_GAS_CO = 4</title>
+         <para>
+The alarm type indicates that carbon monoxide (CO) is detected.
+   </para>
+      </section>
+      <section xreflabel="TYPE_GAS_CO2"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_GAS_CO2">
+         <title>public static final int TYPE_GAS_CO2 = 5</title>
+         <para>
+The alarm type indicates that carbon dioxide (CO2) is detected.
+   </para>
+      </section>
+      <section xreflabel="TYPE_HARDWARE_FAIL"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_HARDWARE_FAIL">
+         <title>public static final int TYPE_HARDWARE_FAIL = 7</title>
+         <para>
+The alarm type indicates that there is hardware failure.
+   </para>
+      </section>
+      <section xreflabel="TYPE_HEAT"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_HEAT">
+         <title>public static final int TYPE_HEAT = 6</title>
+         <para>
+The alarm type indicates that temperature is too high.
+   </para>
+      </section>
+      <section xreflabel="TYPE_POWER_FAIL"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_POWER_FAIL">
+         <title>public static final int TYPE_POWER_FAIL = 8</title>
+         <para>
+The alarm type indicates a power cut.
+   </para>
+      </section>
+      <section xreflabel="TYPE_SMOKE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_SMOKE">
+         <title>public static final int TYPE_SMOKE = 9</title>
+         <para>
+The alarm type indicates that smoke is detected.
+   </para>
+      </section>
+      <section xreflabel="TYPE_SOFTWARE_FAIL"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_SOFTWARE_FAIL">
+         <title>public static final int TYPE_SOFTWARE_FAIL = 10</title>
+         <para>
+The alarm type indicates that there is software failure.
+   </para>
+      </section>
+      <section xreflabel="TYPE_TAMPER"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_TAMPER">
+         <title>public static final int TYPE_TAMPER = 11</title>
+         <para>
+The alarm type for a tamper indication.
+   </para>
+      </section>
+      <section xreflabel="TYPE_UNDEFINED"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_UNDEFINED">
+         <title>public static final int TYPE_UNDEFINED = 0</title>
+         <para>
+The alarm type indicates that the type is not specified.
+   </para>
+      </section>
+      <section xreflabel="TYPE_WATER"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.TYPE_WATER">
+         <title>public static final int TYPE_WATER = 12</title>
+         <para>
+The alarm type indicates that a water leak is detected.
+   </para>
+      </section>
+      <section xreflabel="AlarmData(Map)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.AlarmData-Map-">
+         <title>public  AlarmData(Map&lt;String, ?&gt; fields)</title>
+         <formalpara role="parameter">
+            <title>fields</title>
+            <para>Contains the new {@code AlarmData} instance field values.</para>
+         </formalpara>
+         <para role="description">
+Constructs new {@code AlarmData} instance with the specified field
+ values. The map keys must match to the field names. The map values will
+ be assigned to the appropriate class fields. For example, the maps can
+ be: {"severity"=Integer(1)...}. That map will initialize the
+ {@link #FIELD_SEVERITY} field with 1. If severity is missing,
+ {@link #SEVERITY_UNDEFINED} is used.
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@link #FIELD_SEVERITY} - optional field. The value type must be
+ {@code Integer}.</para>
+            </listitem>
+            <listitem>
+               <para>{@link #FIELD_TYPE} - optional field. The value type must be
+ {@code Integer}.</para>
+            </listitem>
+         </itemizedlist>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>ClassCastException</code>– If the field value types are not expected.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalArgumentException</code>– If the alarm severity is invalid.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>NullPointerException</code>– If the fields map is {@code null}.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="AlarmData(long,Map,int,int)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.AlarmData-long-Map-int-int-">
+         <title>public  AlarmData(long timestamp, Map&lt;String, ?&gt; metadata, int severity, int type)</title>
+         <formalpara role="parameter">
+            <title>timestamp</title>
+            <para>The alarm data timestamp optional field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>metadata</title>
+            <para>The alarm data metadata optional field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>severity</title>
+            <para>The alarm data severity optional field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>type</title>
+            <para>The alarm data type optional field.</para>
+         </formalpara>
+         <para role="description">
+Constructs new {@code AlarmData} instance with the specified arguments.
+   </para>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalArgumentException</code>– If the alarm severity is invalid.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="compareTo(Object)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.compareTo-Object-">
+         <title>public int compareTo(Object o)</title>
+         <formalpara role="parameter">
+            <title>o</title>
+            <para>{@code AlarmData} to be compared.</para>
+         </formalpara>
+         <para role="description">
+Compares this {@code AlarmData} instance with the given argument. If the
+ argument is not {@code AlarmData}, it throws {@code ClassCastException}.
+ Otherwise, this method returns:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@code -1} if this instance field is less than a field of the
+ specified argument.</para>
+            </listitem>
+            <listitem>
+               <para>{@code 0} if all fields are equivalent.</para>
+            </listitem>
+            <listitem>
+               <para>{@code 1} if this instance field is greater than a field of the
+ specified argument.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ The fields are compared in this order: timestamp, metadata, type,
+ severity.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>{@code -1}, {@code 0} or {@code 1} depending on the comparison
+         rules.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>ClassCastException</code>– If the method argument is not of type
+         {@code AlarmData}.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">java.lang.Comparable.compareTo(java.lang.Object)</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="equals(Object)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.equals-Object-">
+         <title>public boolean equals(Object o)</title>
+         <formalpara role="parameter">
+            <title>o</title>
+            <para>The object to compare this data.</para>
+         </formalpara>
+         <para role="description">
+Two {@code AlarmData} instances are equal if they contain equal metadata,
+ timestamp, type and severity.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>{@code true} if this object is equivalent to the specified one.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">org.osgi.service.dal.FunctionData.equals(java.lang.Object)</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="getSeverity()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.getSeverity--">
+         <title>public int getSeverity()</title>
+         <para role="description">
+Returns the alarm severity. The severity can be one of:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@link #SEVERITY_UNDEFINED}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #SEVERITY_MINOR}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #SEVERITY_MAJOR}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #SEVERITY_CRITICAL}</para>
+            </listitem>
+         </itemizedlist>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The alarm severity.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="getType()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.getType--">
+         <title>public int getType()</title>
+         <para role="description">
+Returns the alarm type. The type can be one of the predefined:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@link #TYPE_UNDEFINED}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #TYPE_SMOKE}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #TYPE_HEAT}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #TYPE_COLD}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #TYPE_GAS_CO}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #TYPE_GAS_CO2}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #TYPE_WATER}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #TYPE_POWER_FAIL}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #TYPE_HARDWARE_FAIL}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #TYPE_SOFTWARE_FAIL}</para>
+            </listitem>
+            <listitem>
+               <para>vendor specific</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ Zero and positive values are reserved for this definition and further
+ extensions of the alarm types. Custom types can be used only as negative
+ values to prevent potential collisions.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The alarm type.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="hashCode()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.hashCode--">
+         <title>public int hashCode()</title>
+         <para role="description">
+Returns the hash code for this {@code AlarmData} object. The hash code is
+ a sum of {@link FunctionData#hashCode()}, the alarm severity and the
+ alarm type.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The hash code of this {@code AlarmData} object.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">org.osgi.service.dal.FunctionData.hashCode()</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="toString()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.AlarmData.toString--">
+         <title>public String toString()</title>
+         <para role="description">
+Returns the string representation of this alarm data.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The string representation of this alarm data.</para>
+         </formalpara>
+      </section>
+   </section>
+   <section xreflabel="BooleanData"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.data.BooleanData">
+      <title>public class BooleanData<?line-break?> extends FunctionData</title>
+      <para>
+Function boolean data wrapper. It can contain a boolean value, timestamp and
+ additional metadata. It doesn't support measurement unit.
+   </para>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">BooleanControl</link>, <link linkend="UNRESOLVED">BooleanSensor</link>, <link linkend="UNRESOLVED">FunctionData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="FIELD_VALUE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.BooleanData.FIELD_VALUE">
+         <title>public static final String FIELD_VALUE = "value"</title>
+         <para>
+Represents the value field name. The field value is available with
+ {@link #getValue()}. The field type is {@code boolean} . The constant can
+ be used as a key to {@link #BooleanData(Map)}.
+   </para>
+      </section>
+      <section xreflabel="BooleanData(Map)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.BooleanData.BooleanData-Map-">
+         <title>public  BooleanData(Map&lt;String, ?&gt; fields)</title>
+         <formalpara role="parameter">
+            <title>fields</title>
+            <para>Contains the new {@code BooleanData} instance field values.</para>
+         </formalpara>
+         <para role="description">
+Constructs new {@code BooleanData} instance with the specified field
+ values. The map keys must match to the field names. The map values will
+ be assigned to the appropriate class fields. For example, the maps can
+ be: {"value"=Boolean(true)...}. That map will initialize the
+ {@link #FIELD_VALUE} field with {@code true}.
+ </para>
+         <para>
+ {@link #FIELD_VALUE} - mandatory field. The value type must be
+ {@code Boolean}.</para>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>ClassCastException</code>– If the field value types are not expected.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalArgumentException</code>– If the value is missing.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>NullPointerException</code>– If the fields map is {@code null}.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="BooleanData(long,Map,boolean)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.BooleanData.BooleanData-long-Map-boolean-">
+         <title>public  BooleanData(long timestamp, Map&lt;String, ?&gt; metadata, boolean value)</title>
+         <formalpara role="parameter">
+            <title>timestamp</title>
+            <para>The boolean data timestamp optional field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>metadata</title>
+            <para>The boolean data metadata optional field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>value</title>
+            <para>The boolean value mandatory field.</para>
+         </formalpara>
+         <para role="description">
+Constructs new {@code BooleanData} instance with the specified arguments.
+   </para>
+      </section>
+      <section xreflabel="compareTo(Object)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.BooleanData.compareTo-Object-">
+         <title>public int compareTo(Object o)</title>
+         <formalpara role="parameter">
+            <title>o</title>
+            <para>{@code BooleanData} to be compared.</para>
+         </formalpara>
+         <para role="description">
+Compares this {@code BooleanData} instance with the given argument. If
+ the argument is not {@code BooleanData}, it throws
+ {@code ClassCastException}. Otherwise, this method returns:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@code -1} if this instance field is less than a field of the
+ specified argument.</para>
+            </listitem>
+            <listitem>
+               <para>{@code 0} if all fields are equivalent.</para>
+            </listitem>
+            <listitem>
+               <para>{@code 1} if this instance field is greater than a field of the
+ specified argument.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ The fields are compared in this order: timestamp, metadata, value.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>{@code -1}, {@code 0} or {@code 1} depending on the comparison
+         rules.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>ClassCastException</code>– If the method argument is not of type
+         {@code BooleanData}.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">java.lang.Comparable.compareTo(java.lang.Object)</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="equals(Object)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.BooleanData.equals-Object-">
+         <title>public boolean equals(Object o)</title>
+         <formalpara role="parameter">
+            <title>o</title>
+            <para>The object to compare this data.</para>
+         </formalpara>
+         <para role="description">
+Two {@code BooleanData} instances are equal if they contain equal
+ metadata, timestamp and boolean value.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>{@code true} if this object is equivalent to the specified one.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">org.osgi.service.dal.FunctionData.equals(java.lang.Object)</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="getValue()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.BooleanData.getValue--">
+         <title>public boolean getValue()</title>
+         <para role="description">
+Returns {@code BooleanData} value.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>{@code BooleanData} value.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="hashCode()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.BooleanData.hashCode--">
+         <title>public int hashCode()</title>
+         <para role="description">
+Returns the hash code for this {@code BooleanData} object. The hash code
+ is a sum of {@link FunctionData#hashCode()} and
+ {@link Boolean#hashCode()}, where {@link Boolean#hashCode()} represents
+ the boolean value hash code.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The hash code of this {@code BooleanData} object.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">org.osgi.service.dal.FunctionData.hashCode()</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="toString()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.BooleanData.toString--">
+         <title>public String toString()</title>
+         <para role="description">
+Returns the string representation of this boolean data.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The string representation of this boolean data.</para>
+         </formalpara>
+      </section>
+   </section>
+   <section xreflabel="KeypadData"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.data.KeypadData">
+      <title>public class KeypadData<?line-break?> extends FunctionData</title>
+      <para>
+Represents a keypad event data that is collected when a change with some key
+ from the keypad has occurred.
+ </para>
+      <para>
+ The key pressed event is using {@link #TYPE_PRESSED} type, while the key
+ released event is using {@link #TYPE_RELEASED} type.</para>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">Keypad</link>, <link linkend="UNRESOLVED">FunctionData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="FIELD_KEY_CODE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.FIELD_KEY_CODE">
+         <title>public static final String FIELD_KEY_CODE = "keyCode"</title>
+         <para>
+Represents the key code field name. The field value is available with
+ {@link #getKeyCode()}. The field type is {@code int} . The constant can
+ be used as a key to {@link #KeypadData(Map)}.
+   </para>
+      </section>
+      <section xreflabel="FIELD_KEY_NAME"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.FIELD_KEY_NAME">
+         <title>public static final String FIELD_KEY_NAME = "keyName"</title>
+         <para>
+Represents the key name field name. The field value is available with
+ {@link #getKeyName()}. The field type is {@code String}. The constant can
+ be used as a key to {@link #KeypadData(Map)}.
+   </para>
+      </section>
+      <section xreflabel="FIELD_SUB_TYPE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.FIELD_SUB_TYPE">
+         <title>public static final String FIELD_SUB_TYPE = "subType"</title>
+         <para>
+Represents the event sub-type field name. The field value is available
+ with {@link #getSubType()}. The field type is {@code int}. The constant
+ can be used as a key to {@link #KeypadData(Map)}.
+   </para>
+      </section>
+      <section xreflabel="FIELD_TYPE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.FIELD_TYPE">
+         <title>public static final String FIELD_TYPE = "type"</title>
+         <para>
+Represents the event type field name. The field value is available with
+ {@link #getType()}. The field type is {@code int}. The constant can be
+ used as a key to {@link #KeypadData(Map)}.
+   </para>
+      </section>
+      <section xreflabel="SUB_TYPE_PRESSED_DOUBLE"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.SUB_TYPE_PRESSED_DOUBLE">
+         <title>public static final int SUB_TYPE_PRESSED_DOUBLE = 3</title>
+         <para>
+Represents a keypad event sub-type for a double key pressed event.
+ Usually, there are two press actions and the key is not held down after
+ the second press. This sub-type is used with {@link #TYPE_PRESSED} type.
+   </para>
+      </section>
+      <section xreflabel="SUB_TYPE_PRESSED_DOUBLE_LONG"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.SUB_TYPE_PRESSED_DOUBLE_LONG">
+         <title>public static final int SUB_TYPE_PRESSED_DOUBLE_LONG = 4</title>
+         <para>
+Represents a keypad event sub-type for a double long key pressed event.
+ Usually, there are two press actions and the key is held down after the
+ second press. This sub-type is used with {@link #TYPE_PRESSED} type.
+   </para>
+      </section>
+      <section xreflabel="SUB_TYPE_PRESSED_LONG"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.SUB_TYPE_PRESSED_LONG">
+         <title>public static final int SUB_TYPE_PRESSED_LONG = 2</title>
+         <para>
+Represents a keypad event sub-type for a long key pressed event. Usually,
+ there is a single press and the key is held down. This sub-type is used
+ with {@link #TYPE_PRESSED} type.
+   </para>
+      </section>
+      <section xreflabel="SUB_TYPE_PRESSED_NORMAL"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.SUB_TYPE_PRESSED_NORMAL">
+         <title>public static final int SUB_TYPE_PRESSED_NORMAL = 1</title>
+         <para>
+Represents a keypad event sub-type for a normal key pressed event.
+ Usually, there is a single press and the key is not held down. This
+ sub-type is used with {@link #TYPE_PRESSED} type.
+   </para>
+      </section>
+      <section xreflabel="TYPE_PRESSED"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.TYPE_PRESSED">
+         <title>public static final int TYPE_PRESSED = 0</title>
+         <para>
+Represents a keypad event type for a key pressed event.
+   </para>
+      </section>
+      <section xreflabel="TYPE_RELEASED"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.TYPE_RELEASED">
+         <title>public static final int TYPE_RELEASED = 1</title>
+         <para>
+Represents a keypad event type for a key released event.
+   </para>
+      </section>
+      <section xreflabel="KeypadData(Map)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.KeypadData-Map-">
+         <title>public  KeypadData(Map&lt;String, ?&gt; fields)</title>
+         <formalpara role="parameter">
+            <title>fields</title>
+            <para>Contains the new {@code KeypadData} instance field values.</para>
+         </formalpara>
+         <para role="description">
+Constructs new {@code KeypadData} instance with the specified field
+ values. The map keys must match to the field names. The map values will
+ be assigned to the appropriate class fields. For example, the maps can
+ be: {"type"=Integer(1)...}. That map will initialize the
+ {@link #FIELD_TYPE} field with 1.
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@link #FIELD_TYPE} - mandatory field. The value type must be
+ {@code Integer}.</para>
+            </listitem>
+            <listitem>
+               <para>{@link #FIELD_SUB_TYPE} - optional field. The value type must be
+ {@code Integer}.</para>
+            </listitem>
+            <listitem>
+               <para>{@link #FIELD_KEY_CODE} - mandatory field. The value type must be
+ {@code Integer}.</para>
+            </listitem>
+            <listitem>
+               <para>{@link #FIELD_KEY_NAME} - optional field. The value type must be
+ {@code String}.</para>
+            </listitem>
+         </itemizedlist>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>ClassCastException</code>– If the field value types are not expected.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalArgumentException</code>– If the event type or key code is missing
+         or invalid arguments are specified.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>NullPointerException</code>– If the fields map is {@code null}.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="KeypadData(long,Map,int,int,int,String)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.KeypadData-long-Map-int-int-int-String-">
+         <title>public  KeypadData(long timestamp, Map&lt;String, Object&gt; metadata, int type, int subType, int keyCode, String keyName)</title>
+         <formalpara role="parameter">
+            <title>timestamp</title>
+            <para>The data timestamp optional field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>metadata</title>
+            <para>The data metadata optional field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>type</title>
+            <para>The data event type mandatory field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>subType</title>
+            <para>The data event sub-type optional field or {@code 0} if
+        there is no sub-type.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>keyCode</title>
+            <para>The data key code mandatory field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>keyName</title>
+            <para>The data key name optional field or {@code null} if there
+        is no key name.</para>
+         </formalpara>
+         <para role="description">
+Constructs new {@code KeypadData} instance with the specified arguments.
+   </para>
+      </section>
+      <section xreflabel="compareTo(Object)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.compareTo-Object-">
+         <title>public int compareTo(Object o)</title>
+         <formalpara role="parameter">
+            <title>o</title>
+            <para>{@code KeypadData} to be compared.</para>
+         </formalpara>
+         <para role="description">
+Compares this {@code KeypadData} instance with the given argument. If the
+ argument is not {@code KeypadData}, it throws {@code ClassCastException}.
+ Otherwise, this method returns:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@code -1} if this instance field is less than a field of the
+ specified argument.</para>
+            </listitem>
+            <listitem>
+               <para>{@code 0} if all fields are equivalent.</para>
+            </listitem>
+            <listitem>
+               <para>{@code 1} if this instance field is greater than a field of the
+ specified argument.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ The fields are compared in this order: timestamp, metadata, type,
+ sub-type, key code, key name.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>{@code -1}, {@code 0} or {@code 1} depending on the comparison
+         rules.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>ClassCastException</code>– If the method argument is not of type
+         {@code KeypadData}.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">java.lang.Comparable.compareTo(java.lang.Object)</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="equals(Object)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.equals-Object-">
+         <title>public boolean equals(Object o)</title>
+         <formalpara role="parameter">
+            <title>o</title>
+            <para>The object to compare this data.</para>
+         </formalpara>
+         <para role="description">
+Two {@code KeypadData} instances are equal if they contain equal
+ metadata, timestamp, event type, key code and key name.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>{@code true} if this object is equivalent to the specified one.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">org.osgi.service.dal.FunctionData.equals(java.lang.Object)</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="getKeyCode()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.getKeyCode--">
+         <title>public int getKeyCode()</title>
+         <para role="description">
+The code of the key. This field is mandatory and it holds the
+ semantics(meaning) of the key.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The key code.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="getKeyName()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.getKeyName--">
+         <title>public String getKeyName()</title>
+         <para role="description">
+Represents a human readable name of the corresponding key code. This
+ field is optional and sometimes it could be missed(might be {@code null}
+ ).
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>A string with the name of the key or {@code null} if not
+         specified.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="getSubType()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.getSubType--">
+         <title>public int getSubType()</title>
+         <para role="description">
+Returns the event sub-type. The sub-type provides additional details
+ about the event. The sub-type can be one of:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@link #SUB_TYPE_PRESSED_NORMAL}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #SUB_TYPE_PRESSED_LONG}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #SUB_TYPE_PRESSED_DOUBLE}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #SUB_TYPE_PRESSED_DOUBLE_LONG}</para>
+            </listitem>
+            <listitem>
+               <para>custom sub-type</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ Zero and positive values are reserved for this definition and further
+ extensions of the sub-types. Custom sub-types can be used only as
+ negative values to prevent potential collisions.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The event sub-type.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="getType()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.getType--">
+         <title>public int getType()</title>
+         <para role="description">
+Returns the event type. The type represents the main reason for this
+ event. It can be one of:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@link #TYPE_PRESSED}</para>
+            </listitem>
+            <listitem>
+               <para>{@link #TYPE_RELEASED}</para>
+            </listitem>
+         </itemizedlist>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The event type.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="hashCode()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.hashCode--">
+         <title>public int hashCode()</title>
+         <para role="description">
+Returns the hash code for this {@code KeypadData} object. The hash code
+ is a sum of {@link FunctionData#hashCode()}, {@link String#hashCode()},
+ event type, event sub-type and key code, where {@link String#hashCode()}
+ represents the key name hash code if available.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The hash code of this {@code LevelData} object.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">org.osgi.service.dal.FunctionData.hashCode()</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="toString()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.KeypadData.toString--">
+         <title>public String toString()</title>
+         <para role="description">
+Returns the string representation of this keypad data.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The string representation of this keypad data.</para>
+         </formalpara>
+      </section>
+   </section>
+   <section xreflabel="LevelData"
+            role="class"
+            xml:id="org.osgi.service.dal.functions.data.LevelData">
+      <title>public class LevelData<?line-break?> extends FunctionData</title>
+      <para>
+Function level data wrapper. It supports all properties defined in
+ {@code FunctionData}.
+   </para>
+      <formalpara role="parameter">
+         <title>See Also</title>
+         <para>
+            <link linkend="UNRESOLVED">MultiLevelControl</link>, <link linkend="UNRESOLVED">MultiLevelSensor</link>, <link linkend="UNRESOLVED">Meter</link>, <link linkend="UNRESOLVED">FunctionData</link>
+         </para>
+      </formalpara>
+      <section xreflabel="FIELD_LEVEL"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.LevelData.FIELD_LEVEL">
+         <title>public static final String FIELD_LEVEL = "level"</title>
+         <para>
+Represents the level field name. The field value is available with
+ {@link #getLevel()}. The field type is {@code BigDecimal}. The constant
+ can be used as a key to {@link #LevelData(Map)}.
+   </para>
+      </section>
+      <section xreflabel="FIELD_UNIT"
+               role="field"
+               xml:id="org.osgi.service.dal.functions.data.LevelData.FIELD_UNIT">
+         <title>public static final String FIELD_UNIT = "unit"</title>
+         <para>
+Represents the unit field name. The field value is available with
+ {@link #getUnit()}. The field type is {@code String}. The constant can be
+ used as a key to {@link #LevelData(Map)}.
+   </para>
+      </section>
+      <section xreflabel="LevelData(Map)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.LevelData.LevelData-Map-">
+         <title>public  LevelData(Map&lt;String, ?&gt; fields)</title>
+         <formalpara role="parameter">
+            <title>fields</title>
+            <para>Contains the new {@code LevelData} instance field values.</para>
+         </formalpara>
+         <para role="description">
+Constructs new {@code LevelData} instance with the specified field
+ values. The map keys must match to the field names. The map values will
+ be assigned to the appropriate class fields. For example, the maps can
+ be: {"level"=BigDecimal(1)...}. That map will initialize the
+ {@link #FIELD_LEVEL} field with 1.
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@link #FIELD_LEVEL} - mandatory field. The value type must be
+ {@code BigDecimal}.</para>
+            </listitem>
+            <listitem>
+               <para>{@link #FIELD_UNIT} - optional field. The value type must be
+ {@code String}.</para>
+            </listitem>
+         </itemizedlist>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>ClassCastException</code>– If the field value types are not expected.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>IllegalArgumentException</code>– If the level is missing.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>NullPointerException</code>– If the fields map is {@code null}.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="LevelData(long,Map,BigDecimal,String)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.LevelData.LevelData-long-Map-BigDecimal-String-">
+         <title>public  LevelData(long timestamp, Map&lt;String, Object&gt; metadata, BigDecimal level, String unit)</title>
+         <formalpara role="parameter">
+            <title>timestamp</title>
+            <para>The data timestamp optional field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>metadata</title>
+            <para>The data metadata optional field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>level</title>
+            <para>The level value mandatory field.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>unit</title>
+            <para>The data unit optional field.</para>
+         </formalpara>
+         <para role="description">
+Constructs new {@code LevelData} instance with the specified arguments.
+   </para>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>NullPointerException</code>– If {@code level} is {@code null}.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="compareTo(Object)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.LevelData.compareTo-Object-">
+         <title>public int compareTo(Object o)</title>
+         <formalpara role="parameter">
+            <title>o</title>
+            <para>{@code LevelData} to be compared.</para>
+         </formalpara>
+         <para role="description">
+Compares this {@code LevelData} instance with the given argument. If the
+ argument is not {@code LevelData}, it throws {@code ClassCastException}.
+ Otherwise, this method returns:
+ </para>
+         <itemizedlist>
+            <listitem>
+               <para>{@code -1} if this instance field is less than a field of the
+ specified argument.</para>
+            </listitem>
+            <listitem>
+               <para>{@code 0} if all fields are equivalent.</para>
+            </listitem>
+            <listitem>
+               <para>{@code 1} if this instance field is greater than a field of the
+ specified argument.</para>
+            </listitem>
+         </itemizedlist>
+         <para>
+ The fields are compared in this order: timestamp, metadata, level, unit.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>{@code -1}, {@code 0} or {@code 1} depending on the comparison
+         rules.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>Throws</title>
+            <para>
+               <code>ClassCastException</code>– If the method argument is not of type
+         {@code LevelData}.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">java.lang.Comparable.compareTo(java.lang.Object)</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="equals(Object)"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.LevelData.equals-Object-">
+         <title>public boolean equals(Object o)</title>
+         <formalpara role="parameter">
+            <title>o</title>
+            <para>The object to compare this data.</para>
+         </formalpara>
+         <para role="description">
+Two {@code LevelData} instances are equal if they contain equal metadata,
+ timestamp, unit and level.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>{@code true} if this object is equivalent to the specified one.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">org.osgi.service.dal.FunctionData.equals(java.lang.Object)</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="getLevel()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.LevelData.getLevel--">
+         <title>public BigDecimal getLevel()</title>
+         <para role="description">
+Returns {@code LevelData} value. The value type is {@code BigDecimal}
+ instead of {@code double} to guarantee value accuracy.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The {@code LevelData} value.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="getUnit()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.LevelData.getUnit--">
+         <title>public String getUnit()</title>
+         <para role="description">
+Returns {@code LevelData} unit as it's specified in
+ {@link PropertyMetadata#UNITS} or {@code null} if the unit is missing.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The value unit or {@code null} if the unit is missing.</para>
+         </formalpara>
+      </section>
+      <section xreflabel="hashCode()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.LevelData.hashCode--">
+         <title>public int hashCode()</title>
+         <para role="description">
+Returns the hash code for this {@code LevelData} object. The hash code is
+ a sum of {@link FunctionData#hashCode()}, {@link String#hashCode()} and
+ {@link BigDecimal#hashCode()}, where {@link String#hashCode()} represents
+ the unit hash code and {@link BigDecimal#hashCode()} represents the level
+ hash code.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The hash code of this {@code LevelData} object.</para>
+         </formalpara>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">org.osgi.service.dal.FunctionData.hashCode()</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="toString()"
+               role="method"
+               xml:id="org.osgi.service.dal.functions.data.LevelData.toString--">
+         <title>public String toString()</title>
+         <para role="description">
+Returns the string representation of this level data.
+   </para>
+         <formalpara role="parameter">
+            <title>Returns</title>
+            <para>The string representation of this level data.</para>
+         </formalpara>
+      </section>
+   </section>
+</section>
