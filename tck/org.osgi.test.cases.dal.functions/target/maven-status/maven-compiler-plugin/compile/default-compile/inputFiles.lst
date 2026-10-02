@@ -1,0 +1,16 @@
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/AbstractFunctionTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/AlarmTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/BooleanControlTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/BooleanSensorTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/FunctionEventHandler.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/FunctionSignatureTestCase.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/KeypadTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/MeterTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/MultiLevelControlTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/MultiLevelSensorTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/WakeUpTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/data/AlarmDataTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/data/BooleanDataTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/data/KeypadDataTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/data/LevelDataTest.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.dal.functions/tck/org.osgi.test.cases.dal.functions/src/main/java/org/osgi/test/cases/dal/functions/step/FunctionsTestSteps.java

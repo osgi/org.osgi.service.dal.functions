@@ -1,0 +1,16 @@
+org/osgi/test/cases/dal/functions/MeterTest.class
+org/osgi/test/cases/dal/functions/MultiLevelControlTest.class
+org/osgi/test/cases/dal/functions/data/KeypadDataTest.class
+org/osgi/test/cases/dal/functions/FunctionEventHandler.class
+org/osgi/test/cases/dal/functions/data/LevelDataTest.class
+org/osgi/test/cases/dal/functions/AlarmTest.class
+org/osgi/test/cases/dal/functions/step/FunctionsTestSteps.class
+org/osgi/test/cases/dal/functions/KeypadTest.class
+org/osgi/test/cases/dal/functions/data/AlarmDataTest.class
+org/osgi/test/cases/dal/functions/AbstractFunctionTest.class
+org/osgi/test/cases/dal/functions/FunctionSignatureTestCase.class
+org/osgi/test/cases/dal/functions/WakeUpTest.class
+org/osgi/test/cases/dal/functions/BooleanSensorTest.class
+org/osgi/test/cases/dal/functions/MultiLevelSensorTest.class
+org/osgi/test/cases/dal/functions/BooleanControlTest.class
+org/osgi/test/cases/dal/functions/data/BooleanDataTest.class
