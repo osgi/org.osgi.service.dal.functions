@@ -18,9 +18,13 @@
 
 package org.osgi.test.cases.dal.functions.data;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.osgi.service.dal.FunctionData;
 import org.osgi.service.dal.functions.data.KeypadData;
 import org.osgi.test.cases.dal.functions.AbstractFunctionTest;
@@ -36,6 +40,7 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 	/**
 	 * Checks {@link KeypadData#equals(Object)} method.
 	 */
+	@Test
 	public void testEquals() {
 		// check without metadata
 		KeypadData data = new KeypadData(
@@ -45,18 +50,14 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 				KeypadData.SUB_TYPE_PRESSED_NORMAL,
 				KEY_CODE,
 				KEY_NAME);
-		assertEquals("The keypad data comparison is wrong!",
-				data,
-				data);
-		assertEquals("The keypad data comparison is wrong!",
-				data,
-				new KeypadData(
+		assertThat(data).as("The keypad data comparison is wrong!").isEqualTo(data);
+		assertThat(new KeypadData(
 						Long.MIN_VALUE,
 						null,
 						KeypadData.TYPE_PRESSED,
 						KeypadData.SUB_TYPE_PRESSED_NORMAL,
 						KEY_CODE,
-						KEY_NAME));
+						KEY_NAME)).as("The keypad data comparison is wrong!").isEqualTo(data);
 
 		// check with metadata
 		Map<String,Object> metadata = new HashMap<>();
@@ -68,18 +69,14 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 				KeypadData.SUB_TYPE_PRESSED_NORMAL,
 				KEY_CODE,
 				KEY_NAME);
-		assertEquals("The keypad data comparison is wrong!",
-				data,
-				data);
-		assertEquals("The keypad data comparison is wrong!",
-				data,
-				new KeypadData(
+		assertThat(data).as("The keypad data comparison is wrong!").isEqualTo(data);
+		assertThat(new KeypadData(
 						Long.MIN_VALUE,
 						metadata,
 						KeypadData.TYPE_PRESSED,
 						KeypadData.SUB_TYPE_PRESSED_NORMAL,
 						KEY_CODE,
-						KEY_NAME));
+						KEY_NAME)).as("The keypad data comparison is wrong!").isEqualTo(data);
 
 		// check with fields map
 		Map<String,Object> fields = new HashMap<>();
@@ -90,23 +87,20 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 		fields.put(FunctionData.FIELD_METADATA, metadata);
 		fields.put(FunctionData.FIELD_TIMESTAMP, Long.valueOf(Long.MIN_VALUE));
 		data = new KeypadData(fields);
-		assertEquals("The keypad data comparison is wrong!",
-				data,
-				data);
-		assertEquals("The keypad data comparison is wrong!",
-				data,
-				new KeypadData(
+		assertThat(data).as("The keypad data comparison is wrong!").isEqualTo(data);
+		assertThat(new KeypadData(
 						Long.MIN_VALUE,
 						metadata,
 						KeypadData.TYPE_PRESSED,
 						KeypadData.SUB_TYPE_PRESSED_NORMAL,
 						KEY_CODE,
-						KEY_NAME));
+						KEY_NAME)).as("The keypad data comparison is wrong!").isEqualTo(data);
 	}
 
 	/**
 	 * Checks {@link KeypadData#compareTo(Object)} with {@code KeypadData}.
 	 */
+	@Test
 	public void testComparison() {
 		// check without metadata
 		KeypadData data = new KeypadData(
@@ -116,19 +110,15 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 				KeypadData.SUB_TYPE_PRESSED_NORMAL,
 				KEY_CODE,
 				KEY_NAME);
-		assertEquals(
-				"The keypad data comparison is wrong!",
-				0, data.compareTo(data));
-		assertEquals(
-				"The keypad data comparison is wrong!",
-				0, data.compareTo(
-						new KeypadData(
-								Long.MIN_VALUE,
-								null,
-								KeypadData.TYPE_PRESSED,
-								KeypadData.SUB_TYPE_PRESSED_NORMAL,
-								KEY_CODE,
-								KEY_NAME)));
+		assertThat(data.compareTo(data)).as("The keypad data comparison is wrong!").isZero();
+		assertThat(data.compareTo(
+				new KeypadData(
+						Long.MIN_VALUE,
+						null,
+						KeypadData.TYPE_PRESSED,
+						KeypadData.SUB_TYPE_PRESSED_NORMAL,
+						KEY_CODE,
+						KEY_NAME))).as("The keypad data comparison is wrong!").isZero();
 
 		// check with metadata
 		Map<String,Object> metadata = new HashMap<>();
@@ -140,19 +130,15 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 				KeypadData.SUB_TYPE_PRESSED_NORMAL,
 				KEY_CODE,
 				KEY_NAME);
-		assertEquals(
-				"The keypad data comparison is wrong!",
-				0, data.compareTo(data));
-		assertEquals(
-				"The keypad data comparison is wrong!",
-				0, data.compareTo(
-						new KeypadData(
-								Long.MIN_VALUE,
-								metadata,
-								KeypadData.TYPE_PRESSED,
-								KeypadData.SUB_TYPE_PRESSED_NORMAL,
-								KEY_CODE,
-								KEY_NAME)));
+		assertThat(data.compareTo(data)).as("The keypad data comparison is wrong!").isZero();
+		assertThat(data.compareTo(
+				new KeypadData(
+						Long.MIN_VALUE,
+						metadata,
+						KeypadData.TYPE_PRESSED,
+						KeypadData.SUB_TYPE_PRESSED_NORMAL,
+						KEY_CODE,
+						KEY_NAME))).as("The keypad data comparison is wrong!").isZero();
 
 		// check with fields map
 		Map<String,Object> fields = new HashMap<>();
@@ -163,23 +149,21 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 		fields.put(FunctionData.FIELD_METADATA, metadata);
 		fields.put(FunctionData.FIELD_TIMESTAMP, Long.valueOf(Long.MIN_VALUE));
 		data = new KeypadData(fields);
-		assertEquals(
-				"The keypad data comparison is wrong!",
-				0, data.compareTo(data));
-		assertEquals("The keypad data comparison is wrong!",
-				0, data.compareTo(
-						new KeypadData(
-								Long.MIN_VALUE,
-								metadata,
-								KeypadData.TYPE_PRESSED,
-								KeypadData.SUB_TYPE_PRESSED_NORMAL,
-								KEY_CODE,
-								KEY_NAME)));
+		assertThat(data.compareTo(data)).as("The keypad data comparison is wrong!").isZero();
+		assertThat(data.compareTo(
+				new KeypadData(
+						Long.MIN_VALUE,
+						metadata,
+						KeypadData.TYPE_PRESSED,
+						KeypadData.SUB_TYPE_PRESSED_NORMAL,
+						KEY_CODE,
+						KEY_NAME))).as("The keypad data comparison is wrong!").isZero();
 	}
 
 	/**
 	 * Checks {@link KeypadData#hashCode()}.
 	 */
+	@Test
 	public void testHashCode() {
 		// check without metadata
 		KeypadData data = new KeypadData(
@@ -189,18 +173,14 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 				KeypadData.SUB_TYPE_PRESSED_NORMAL,
 				KEY_CODE,
 				KEY_NAME);
-		assertEquals("The keypad data hash code is wrong!",
-				data.hashCode(),
-				data.hashCode());
-		assertEquals("The keypad data hash code is wrong!",
-				data.hashCode(),
-				(new KeypadData(
+		assertThat(data.hashCode()).as("The keypad data hash code is wrong!").isEqualTo(data.hashCode());
+		assertThat((new KeypadData(
 						Long.MIN_VALUE,
 						null,
 						KeypadData.TYPE_PRESSED,
 						KeypadData.SUB_TYPE_PRESSED_NORMAL,
 						KEY_CODE,
-						KEY_NAME)).hashCode());
+						KEY_NAME)).hashCode()).as("The keypad data hash code is wrong!").isEqualTo(data.hashCode());
 
 		// check with metadata
 		Map<String,Object> metadata = new HashMap<>();
@@ -212,18 +192,14 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 				KeypadData.SUB_TYPE_PRESSED_NORMAL,
 				KEY_CODE,
 				KEY_NAME);
-		assertEquals("The keypad data hash code is wrong!",
-				data.hashCode(),
-				data.hashCode());
-		assertEquals("The keypad data hash code is wrong!",
-				data.hashCode(),
-				(new KeypadData(
+		assertThat(data.hashCode()).as("The keypad data hash code is wrong!").isEqualTo(data.hashCode());
+		assertThat((new KeypadData(
 						Long.MIN_VALUE,
 						metadata,
 						KeypadData.TYPE_PRESSED,
 						KeypadData.SUB_TYPE_PRESSED_NORMAL,
 						KEY_CODE,
-						KEY_NAME)).hashCode());
+						KEY_NAME)).hashCode()).as("The keypad data hash code is wrong!").isEqualTo(data.hashCode());
 
 		// check with fields map
 		Map<String,Object> fields = new HashMap<>();
@@ -234,23 +210,20 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 		fields.put(FunctionData.FIELD_METADATA, metadata);
 		fields.put(FunctionData.FIELD_TIMESTAMP, Long.valueOf(Long.MIN_VALUE));
 		data = new KeypadData(fields);
-		assertEquals("The keypad data hash code is wrong!",
-				data.hashCode(),
-				data.hashCode());
-		assertEquals("The keypad data hash code is wrong!",
-				data.hashCode(),
-				(new KeypadData(
+		assertThat(data.hashCode()).as("The keypad data hash code is wrong!").isEqualTo(data.hashCode());
+		assertThat((new KeypadData(
 						Long.MIN_VALUE,
 						metadata,
 						KeypadData.TYPE_PRESSED,
 						KeypadData.SUB_TYPE_PRESSED_NORMAL,
 						KEY_CODE,
-						KEY_NAME)).hashCode());
+						KEY_NAME)).hashCode()).as("The keypad data hash code is wrong!").isEqualTo(data.hashCode());
 	}
 
 	/**
 	 * Checks {@code KeypadData} field values.
 	 */
+	@Test
 	public void testFields() {
 		// check without metadata
 		KeypadData data = new KeypadData(
@@ -310,6 +283,7 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 	/**
 	 * Checks the {@code KeypadData} construction with invalid fields.
 	 */
+	@Test
 	public void testInvalidFields() {
 		Map<String,Object> fields = new HashMap<>();
 		fields.put(KeypadData.FIELD_TYPE, "invalid-event-type");
@@ -364,6 +338,7 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 	/**
 	 * Checks the {@code KeypadData} construction with invalid sub-types.
 	 */
+	@Test
 	public void testInvalidSubtypes() {
 		checkInvalidSubtype(KeypadData.TYPE_RELEASED, KeypadData.SUB_TYPE_PRESSED_NORMAL);
 		checkInvalidSubtype(KeypadData.TYPE_RELEASED, KeypadData.SUB_TYPE_PRESSED_LONG);
@@ -374,6 +349,7 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 	/**
 	 * Checks {@link KeypadData#toString()}.
 	 */
+	@Test
 	public void testToString() {
 		KeypadData keypadData = new KeypadData(
 				System.currentTimeMillis(),
@@ -382,7 +358,7 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 				KeypadData.SUB_TYPE_PRESSED_LONG,
 				Integer.MIN_VALUE,
 				"test-key-name");
-		assertNotNull("There is no string representation of the keypad data.", keypadData.toString());
+		assertThat(keypadData.toString()).as("There is no string representation of the keypad data.").isNotNull();
 		keypadData = new KeypadData(
 				Long.MIN_VALUE,
 				null,
@@ -390,7 +366,7 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 				Integer.MIN_VALUE,
 				Integer.MIN_VALUE,
 				null);
-		assertNotNull("There is no string representation of the keypad data.", keypadData.toString());
+		assertThat(keypadData.toString()).as("There is no string representation of the keypad data.").isNotNull();
 	}
 
 	private void checkInvalidSubtype(int type, int subType) {
@@ -428,27 +404,15 @@ public final class KeypadDataTest extends AbstractFunctionTest {
 			KeypadData actualData) {
 		super.assertFunctionDataFields(timestamp, metadata, actualData);
 		// event type
-		assertEquals(
-				"The event type is not correct!",
-				type,
-				actualData.getType());
+		assertThat(actualData.getType()).as("The event type is not correct!").isEqualTo(type);
 
 		// event sub-type
-		assertEquals(
-				"The event sub-type is not correct!",
-				subType,
-				actualData.getSubType());
+		assertThat(actualData.getSubType()).as("The event sub-type is not correct!").isEqualTo(subType);
 
 		// key code
-		assertEquals(
-				"The key code is not correct!",
-				keyCode,
-				actualData.getKeyCode());
+		assertThat(actualData.getKeyCode()).as("The key code is not correct!").isEqualTo(keyCode);
 
 		// key name
-		assertEquals(
-				"The key name is not correct!",
-				keyName,
-				actualData.getKeyName());
+		assertThat(actualData.getKeyName()).as("The key name is not correct!").isEqualTo(keyName);
 	}
 }

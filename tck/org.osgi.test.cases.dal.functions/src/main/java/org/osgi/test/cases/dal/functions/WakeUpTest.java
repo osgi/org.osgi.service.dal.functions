@@ -18,7 +18,11 @@
 
 package org.osgi.test.cases.dal.functions;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.math.BigDecimal;
+
+import org.junit.jupiter.api.Test;
 import org.osgi.service.dal.DeviceException;
 import org.osgi.service.dal.Function;
 import org.osgi.service.dal.FunctionEvent;
@@ -41,12 +45,13 @@ public final class WakeUpTest extends AbstractFunctionTest {
 	 * 
 	 * @throws DeviceException If operation error is available.
 	 */
+	@Test
 	public void testWakeUpInterval() throws DeviceException {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_WAKE_UP,
 				FunctionsTestSteps.STEP_MESSAGE_AVAILABLE_WAKE_UP);
 		Function[] wakeUpFunctions = super.getFunctions(WakeUp.class.getName());
-		FunctionEventHandler eventHandler = new FunctionEventHandler(super.getContext());
+		FunctionEventHandler eventHandler = new FunctionEventHandler(super.context);
 		boolean check = false;
 		for (int i = 0; i < wakeUpFunctions.length; i++) {
 			WakeUp currentFunction = (WakeUp) wakeUpFunctions[i];
@@ -58,21 +63,14 @@ public final class WakeUpTest extends AbstractFunctionTest {
 						new BigDecimal(getWakeUpInterval(currentFunction)), null);
 				check = true;
 				FunctionEvent wakeUpEvent = eventHandler.getEvents(1)[0];
-				assertEquals(
-						"The event property is not correct.",
-						WakeUp.PROPERTY_AWAKE,
-						wakeUpEvent.getFunctionPropertyName());
-				assertTrue(
-						"The event value type must be BooleanData.",
-						wakeUpEvent.getFunctionPropertyValue() instanceof BooleanData);
-				assertTrue(
-						"The event value is not correct.",
-						((BooleanData) wakeUpEvent.getFunctionPropertyValue()).getValue());
+				assertThat(wakeUpEvent.getFunctionPropertyName()).as("The event property is not correct.").isEqualTo(WakeUp.PROPERTY_AWAKE);
+				assertThat(wakeUpEvent.getFunctionPropertyValue() instanceof BooleanData).as("The event value type must be BooleanData.").isTrue();
+				assertThat(((BooleanData) wakeUpEvent.getFunctionPropertyValue()).getValue()).as("The event value is not correct.").isTrue();
 			} finally {
 				eventHandler.unregister();
 			}
 		}
-		assertTrue("At least one Wake Up function must support setWakeUpInterval with ms.", check);
+		assertThat(check).as("At least one Wake Up function must support setWakeUpInterval with ms.").isTrue();
 	}
 
 	private static long getWakeUpInterval(WakeUp wakeUp) {

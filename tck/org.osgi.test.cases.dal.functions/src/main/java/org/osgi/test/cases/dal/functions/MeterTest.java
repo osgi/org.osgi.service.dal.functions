@@ -18,6 +18,9 @@
 
 package org.osgi.test.cases.dal.functions;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 import org.osgi.service.dal.DeviceException;
 import org.osgi.service.dal.Function;
 import org.osgi.service.dal.functions.Meter;
@@ -34,6 +37,7 @@ public final class MeterTest extends AbstractFunctionTest {
 	 * 
 	 * @throws DeviceException If operation error is available.
 	 */
+	@Test
 	public void testTotal() throws DeviceException {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_METER,
@@ -42,7 +46,7 @@ public final class MeterTest extends AbstractFunctionTest {
 		for (int i = 0; i < meters.length; i++) {
 			Meter currentMeter = (Meter) meters[i];
 			LevelData total = currentMeter.getTotal();
-			assertNotNull("No total metering info.", total);
+			assertThat(total).as("No total metering info.").isNotNull();
 			super.assertEquals(
 					currentMeter.getPropertyMetadata(Meter.PROPERTY_TOTAL),
 					total.getLevel(), total);
@@ -54,6 +58,7 @@ public final class MeterTest extends AbstractFunctionTest {
 	 * 
 	 * @throws DeviceException If operation error is available.
 	 */
+	@Test
 	public void testCurrent() throws DeviceException {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_METER,
@@ -62,19 +67,18 @@ public final class MeterTest extends AbstractFunctionTest {
 		for (int i = 0; i < meters.length; i++) {
 			Meter currentMeter = (Meter) meters[i];
 			LevelData current = currentMeter.getCurrent();
-			assertNotNull("No total metering info.", current);
+			assertThat(current).as("No total metering info.").isNotNull();
 			super.assertEquals(
 					currentMeter.getPropertyMetadata(Meter.PROPERTY_CURRENT),
 					current.getLevel(), current);
-			assertTrue(
-					"The current value is greater than the total value.",
-					current.getLevel().compareTo(currentMeter.getTotal().getLevel()) <= 0);
+			assertThat(current.getLevel().compareTo(currentMeter.getTotal().getLevel()) <= 0).as("The current value is greater than the total value.").isTrue();
 		}
 	}
 
 	/**
 	 * Checks {@code Meter} current consumption events.
 	 */
+	@Test
 	public void testCurrentPropertyEvent() {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_METER,
@@ -89,6 +93,7 @@ public final class MeterTest extends AbstractFunctionTest {
 	/**
 	 * Checks {@code Meter} total consumption events.
 	 */
+	@Test
 	public void testTotalPropertyEvent() {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_METER,

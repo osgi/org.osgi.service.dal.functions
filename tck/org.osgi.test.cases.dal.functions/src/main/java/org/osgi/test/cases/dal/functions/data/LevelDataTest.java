@@ -18,10 +18,14 @@
 
 package org.osgi.test.cases.dal.functions.data;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.osgi.service.dal.FunctionData;
 import org.osgi.service.dal.SIUnits;
 import org.osgi.service.dal.functions.data.LevelData;
@@ -38,26 +42,19 @@ public final class LevelDataTest extends AbstractFunctionTest {
 	/**
 	 * Checks {@link LevelData#equals(Object)} method.
 	 */
+	@Test
 	public void testEquals() {
 		// check without metadata
 		LevelData data = new LevelData(Long.MIN_VALUE, null, TEST_VALUE, null);
-		assertEquals("The level data comparison is wrong!",
-				data,
-				data);
-		assertEquals("The level data comparison is wrong!",
-				data,
-				new LevelData(Long.MIN_VALUE, null, TEST_VALUE, null));
+		assertThat(data).as("The level data comparison is wrong!").isEqualTo(data);
+		assertThat(new LevelData(Long.MIN_VALUE, null, TEST_VALUE, null)).as("The level data comparison is wrong!").isEqualTo(data);
 
 		// check with metadata
 		Map<String,Object> metadata = new HashMap<>();
 		metadata.put(FunctionData.DESCRIPTION, "test-description");
 		data = new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT);
-		assertEquals("The level data comparison is wrong!",
-				data,
-				data);
-		assertEquals("The level data comparison is wrong!",
-				data,
-				new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT));
+		assertThat(data).as("The level data comparison is wrong!").isEqualTo(data);
+		assertThat(new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT)).as("The level data comparison is wrong!").isEqualTo(data);
 
 		// check with fields map
 		Map<String,Object> fields = new HashMap<>();
@@ -66,37 +63,26 @@ public final class LevelDataTest extends AbstractFunctionTest {
 		fields.put(FunctionData.FIELD_METADATA, metadata);
 		fields.put(LevelData.FIELD_UNIT, TEST_UNIT);
 		data = new LevelData(fields);
-		assertEquals("The level data comparison is wrong!",
-				data,
-				data);
-		assertEquals("The level data comparison is wrong!",
-				data,
-				new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT));
+		assertThat(data).as("The level data comparison is wrong!").isEqualTo(data);
+		assertThat(new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT)).as("The level data comparison is wrong!").isEqualTo(data);
 	}
 
 	/**
 	 * Checks {@link LevelData#compareTo(Object)} with {@code LevelData}.
 	 */
+	@Test
 	public void testComparison() {
 		// check without metadata
 		LevelData data = new LevelData(Long.MIN_VALUE, null, TEST_VALUE, null);
-		assertEquals(
-				"The level data comparison is wrong!",
-				0, data.compareTo(data));
-		assertEquals(
-				"The level data comparison is wrong!",
-				0, data.compareTo(new LevelData(Long.MIN_VALUE, null, TEST_VALUE, null)));
+		assertThat(data.compareTo(data)).as("The level data comparison is wrong!").isZero();
+		assertThat(data.compareTo(new LevelData(Long.MIN_VALUE, null, TEST_VALUE, null))).as("The level data comparison is wrong!").isZero();
 
 		// check with metadata
 		Map<String,Object> metadata = new HashMap<>();
 		metadata.put(FunctionData.DESCRIPTION, "test-description");
 		data = new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT);
-		assertEquals(
-				"The level data comparison is wrong!",
-				0, data.compareTo(data));
-		assertEquals(
-				"The level data comparison is wrong!",
-				0, data.compareTo(new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT)));
+		assertThat(data.compareTo(data)).as("The level data comparison is wrong!").isZero();
+		assertThat(data.compareTo(new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT))).as("The level data comparison is wrong!").isZero();
 
 		// check with fields map
 		Map<String,Object> fields = new HashMap<>();
@@ -105,36 +91,26 @@ public final class LevelDataTest extends AbstractFunctionTest {
 		fields.put(FunctionData.FIELD_METADATA, metadata);
 		fields.put(LevelData.FIELD_UNIT, TEST_UNIT);
 		data = new LevelData(fields);
-		assertEquals(
-				"The level data comparison is wrong!",
-				0, data.compareTo(data));
-		assertEquals("The level data comparison is wrong!",
-				0, data.compareTo(new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT)));
+		assertThat(data.compareTo(data)).as("The level data comparison is wrong!").isZero();
+		assertThat(data.compareTo(new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT))).as("The level data comparison is wrong!").isZero();
 	}
 
 	/**
 	 * Checks {@link LevelData#hashCode()}.
 	 */
+	@Test
 	public void testHashCode() {
 		// check without metadata
 		LevelData data = new LevelData(Long.MIN_VALUE, null, TEST_VALUE, null);
-		assertEquals("The level data hash code is wrong!",
-				data.hashCode(),
-				data.hashCode());
-		assertEquals("The level data hash code is wrong!",
-				data.hashCode(),
-				(new LevelData(Long.MIN_VALUE, null, TEST_VALUE, null)).hashCode());
+		assertThat(data.hashCode()).as("The level data hash code is wrong!").isEqualTo(data.hashCode());
+		assertThat((new LevelData(Long.MIN_VALUE, null, TEST_VALUE, null)).hashCode()).as("The level data hash code is wrong!").isEqualTo(data.hashCode());
 
 		// check with metadata
 		Map<String,Object> metadata = new HashMap<>();
 		metadata.put(FunctionData.DESCRIPTION, "test-description");
 		data = new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT);
-		assertEquals("The level data hash code is wrong!",
-				data.hashCode(),
-				data.hashCode());
-		assertEquals("The level data hash code is wrong!",
-				data.hashCode(),
-				(new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT)).hashCode());
+		assertThat(data.hashCode()).as("The level data hash code is wrong!").isEqualTo(data.hashCode());
+		assertThat((new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT)).hashCode()).as("The level data hash code is wrong!").isEqualTo(data.hashCode());
 
 		// check with fields map
 		Map<String,Object> fields = new HashMap<>();
@@ -143,17 +119,14 @@ public final class LevelDataTest extends AbstractFunctionTest {
 		fields.put(FunctionData.FIELD_METADATA, metadata);
 		fields.put(LevelData.FIELD_UNIT, TEST_UNIT);
 		data = new LevelData(fields);
-		assertEquals("The level data hash code is wrong!",
-				data.hashCode(),
-				data.hashCode());
-		assertEquals("The level data hash code is wrong!",
-				data.hashCode(),
-				(new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT)).hashCode());
+		assertThat(data.hashCode()).as("The level data hash code is wrong!").isEqualTo(data.hashCode());
+		assertThat((new LevelData(Long.MIN_VALUE, metadata, TEST_VALUE, TEST_UNIT)).hashCode()).as("The level data hash code is wrong!").isEqualTo(data.hashCode());
 	}
 
 	/**
 	 * Checks {@code LevelData} field values.
 	 */
+	@Test
 	public void testFields() {
 		// check without metadata
 		LevelData data = new LevelData(Long.MIN_VALUE, null, TEST_VALUE, null);
@@ -178,6 +151,7 @@ public final class LevelDataTest extends AbstractFunctionTest {
 	/**
 	 * Checks the {@code LevelData} construction with an invalid fields.
 	 */
+	@Test
 	public void testInvalidFields() {
 		Map<String,Object> fields = new HashMap<>();
 		fields.put(LevelData.FIELD_LEVEL, "wrong-type");
@@ -226,19 +200,20 @@ public final class LevelDataTest extends AbstractFunctionTest {
 	/**
 	 * Checks {@link LevelData#toString()}.
 	 */
+	@Test
 	public void testToString() {
 		LevelData levelData = new LevelData(
 				System.currentTimeMillis(),
 				new HashMap<>(),
 				new BigDecimal("1.00001"),
 				SIUnits.AMPERE);
-		assertNotNull("There is no string representation of the level data.", levelData.toString());
+		assertThat(levelData.toString()).as("There is no string representation of the level data.").isNotNull();
 		levelData = new LevelData(
 				System.currentTimeMillis(),
 				null,
 				new BigDecimal("1.00001"),
 				null);
-		assertNotNull("There is no string representation of the level data.", levelData.toString());
+		assertThat(levelData.toString()).as("There is no string representation of the level data.").isNotNull();
 	}
 
 	private void checkInvalidFieldType(Map<String, ? > fields) {
@@ -254,15 +229,9 @@ public final class LevelDataTest extends AbstractFunctionTest {
 			BigDecimal level, String unit, LevelData actualData) {
 		super.assertFunctionDataFields(timestamp, metadata, actualData);
 		// unit
-		assertEquals(
-				"The metadata is not correct!",
-				unit,
-				actualData.getUnit());
+		assertThat(actualData.getUnit()).as("The metadata is not correct!").isEqualTo(unit);
 
 		// value
-		assertEquals(
-				"The level is not correct!",
-				level,
-				actualData.getLevel());
+		assertThat(actualData.getLevel()).as("The level is not correct!").isEqualTo(level);
 	}
 }

@@ -18,6 +18,9 @@
 
 package org.osgi.test.cases.dal.functions;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 import org.osgi.service.dal.DeviceException;
 import org.osgi.service.dal.Function;
 import org.osgi.service.dal.functions.MultiLevelSensor;
@@ -34,6 +37,7 @@ public final class MultiLevelSensorTest extends AbstractFunctionTest {
 	 * 
 	 * @throws DeviceException If operation error is available.
 	 */
+	@Test
 	public void testGetData() throws DeviceException {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_MLS,
@@ -42,7 +46,7 @@ public final class MultiLevelSensorTest extends AbstractFunctionTest {
 		for (int i = 0; i < multiLevelSensors.length; i++) {
 			MultiLevelSensor currentSensor = (MultiLevelSensor) multiLevelSensors[i];
 			LevelData currentData = currentSensor.getData();
-			assertNotNull("The level data cannot be null!", currentData);
+			assertThat(currentData).as("The level data cannot be null!").isNotNull();
 			super.assertEquals(
 					currentSensor.getPropertyMetadata(MultiLevelSensor.PROPERTY_DATA),
 					currentData.getLevel(), currentData);
@@ -52,6 +56,7 @@ public final class MultiLevelSensorTest extends AbstractFunctionTest {
 	/**
 	 * Checks {@code MultiLevelSensor} function events.
 	 */
+	@Test
 	public void testPropertyEvent() {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_MLS,

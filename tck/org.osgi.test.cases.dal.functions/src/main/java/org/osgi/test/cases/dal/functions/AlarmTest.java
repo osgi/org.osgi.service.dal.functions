@@ -18,6 +18,7 @@
 
 package org.osgi.test.cases.dal.functions;
 
+import org.junit.jupiter.api.Test;
 import org.osgi.service.dal.functions.Alarm;
 import org.osgi.test.cases.dal.functions.step.FunctionsTestSteps;
 
@@ -29,6 +30,7 @@ public final class AlarmTest extends AbstractFunctionTest {
 	/**
 	 * Checks {@code Alarm} function events.
 	 */
+	@Test
 	public void testPropertyEvent() {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_ALARM,

@@ -22,6 +22,6 @@ package org.osgi.test.cases.dal.functions;
  * Validates the signature of all specified methods.
  */
 public class FunctionSignatureTestCase extends
-		org.osgi.test.support.signature.SignatureTestCase {
+		org.osgi.tck.signature.AbstractSignatureTest {
 	// all test methods are in the parent class
 }

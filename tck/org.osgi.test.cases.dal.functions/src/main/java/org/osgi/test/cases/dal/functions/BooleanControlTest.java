@@ -18,8 +18,11 @@
 
 package org.osgi.test.cases.dal.functions;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.osgi.service.dal.DeviceException;
 import org.osgi.service.dal.Function;
 import org.osgi.service.dal.FunctionEvent;
@@ -39,6 +42,7 @@ public final class BooleanControlTest extends AbstractFunctionTest {
 	 * 
 	 * @throws DeviceException If operation error is available.
 	 */
+	@Test
 	public void testSetTrue() throws DeviceException {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_BC,
@@ -57,6 +61,7 @@ public final class BooleanControlTest extends AbstractFunctionTest {
 	 * 
 	 * @throws DeviceException If operation error is available.
 	 */
+	@Test
 	public void testSetFalse() throws DeviceException {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_BC,
@@ -75,6 +80,7 @@ public final class BooleanControlTest extends AbstractFunctionTest {
 	 * 
 	 * @throws DeviceException If operation error is available.
 	 */
+	@Test
 	public void testReverse() throws DeviceException {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_BC,
@@ -95,6 +101,7 @@ public final class BooleanControlTest extends AbstractFunctionTest {
 	 * @throws DeviceException If an error is available while executing the
 	 *         operation.
 	 */
+	@Test
 	public void testPropertyEvent() throws DeviceException {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_BC,
@@ -103,7 +110,7 @@ public final class BooleanControlTest extends AbstractFunctionTest {
 				BooleanControl.class.getName(), PropertyMetadata.ACCESS_EVENTABLE);
 		BooleanControl booleanControl = (BooleanControl) functions[0];
 		String functionUID = (String) booleanControl.getServiceProperty(Function.SERVICE_UID);
-		FunctionEventHandler eventHandler = new FunctionEventHandler(super.getContext());
+		FunctionEventHandler eventHandler = new FunctionEventHandler(super.context);
 		eventHandler.register(functionUID, BooleanControl.PROPERTY_DATA);
 		FunctionEvent functionEvent;
 		BooleanData currentData = booleanControl.getData();
@@ -115,31 +122,23 @@ public final class BooleanControlTest extends AbstractFunctionTest {
 		}
 		BooleanData propertyData = (BooleanData) functionEvent.getFunctionPropertyValue();
 		super.assertEquals(!currentData.getValue(), propertyData);
-		assertEquals(
-				"The event function identifier is not correct!",
-				functionUID,
-				functionEvent.getFunctionUID());
-		assertEquals(
-				"The property name is not correct!",
-				BooleanControl.PROPERTY_DATA,
-				functionEvent.getFunctionPropertyName());
+		assertThat(functionEvent.getFunctionUID()).as("The event function identifier is not correct!").isEqualTo(functionUID);
+		assertThat(functionEvent.getFunctionPropertyName()).as("The property name is not correct!").isEqualTo(BooleanControl.PROPERTY_DATA);
 	}
 
 	private void checkMetadata(OperationMetadata opMetadata) {
 		if (null == opMetadata) {
 			return;
 		}
-		assertNull("BooleanControl operation doesn't have parameters.",
-				opMetadata.getParametersMetadata());
-		assertNull("BooleanControl operation doesn't have return value.",
-				opMetadata.getReturnValueMetadata());
+		assertThat(opMetadata.getParametersMetadata()).as("BooleanControl operation doesn't have parameters.").isNull();
+		assertThat(opMetadata.getReturnValueMetadata()).as("BooleanControl operation doesn't have return value.").isNull();
 		Map<String, ? > metadata = opMetadata.getMetadata();
 		if (null == metadata) {
 			return;
 		}
 		Object description = metadata.get(OperationMetadata.DESCRIPTION);
 		if (null != description) {
-			assertTrue("The operation description must be a string.", description instanceof String);
+			assertThat(description instanceof String).as("The operation description must be a string.").isTrue();
 		}
 	}
 }
