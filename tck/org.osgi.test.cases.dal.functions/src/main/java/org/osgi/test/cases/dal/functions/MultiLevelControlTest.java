@@ -18,6 +18,7 @@
 
 package org.osgi.test.cases.dal.functions;
 
+import org.junit.jupiter.api.Test;
 import org.osgi.service.dal.DeviceException;
 import org.osgi.service.dal.Function;
 import org.osgi.service.dal.FunctionData;
@@ -37,6 +38,7 @@ public final class MultiLevelControlTest extends AbstractFunctionTest {
 	 * 
 	 * @throws DeviceException If operation error is available.
 	 */
+	@Test
 	public void testSetData() throws DeviceException {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_MLC,
@@ -63,6 +65,7 @@ public final class MultiLevelControlTest extends AbstractFunctionTest {
 	/**
 	 * Checks {@code MultiLevelControl} function events.
 	 */
+	@Test
 	public void testPropertyEvent() {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_MLC,

@@ -18,6 +18,9 @@
 
 package org.osgi.test.cases.dal.functions;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 import org.osgi.service.dal.DeviceException;
 import org.osgi.service.dal.Function;
 import org.osgi.service.dal.functions.BooleanSensor;
@@ -34,6 +37,7 @@ public final class BooleanSensorTest extends AbstractFunctionTest {
 	 * 
 	 * @throws DeviceException If operation error is available.
 	 */
+	@Test
 	public void testGetData() throws DeviceException {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_BS,
@@ -42,7 +46,7 @@ public final class BooleanSensorTest extends AbstractFunctionTest {
 		for (int i = 0; i < booleanSensors.length; i++) {
 			BooleanSensor currentBooleanSensor = (BooleanSensor) booleanSensors[i];
 			BooleanData currentData = currentBooleanSensor.getData();
-			assertNotNull("The boolean data cannot be null!", currentData);
+			assertThat(currentData).as("The boolean data cannot be null!").isNotNull();
 			super.assertEquals(currentData.getValue(), currentData);
 		}
 	}
@@ -50,6 +54,7 @@ public final class BooleanSensorTest extends AbstractFunctionTest {
 	/**
 	 * Checks {@code BooleanSensor} function events.
 	 */
+	@Test
 	public void testPropertyEvent() {
 		super.testStepProxy.execute(
 				FunctionsTestSteps.STEP_ID_AVAILABLE_BS,

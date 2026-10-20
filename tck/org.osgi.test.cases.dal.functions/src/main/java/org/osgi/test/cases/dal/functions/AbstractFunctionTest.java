@@ -18,11 +18,16 @@
 
 package org.osgi.test.cases.dal.functions;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
@@ -34,13 +39,16 @@ import org.osgi.service.dal.PropertyMetadata;
 import org.osgi.service.dal.functions.data.BooleanData;
 import org.osgi.service.dal.functions.data.LevelData;
 import org.osgi.test.cases.dal.step.TestStepDeviceProxy;
-import org.osgi.test.support.compatibility.DefaultTestBundleControl;
+import org.osgi.test.common.annotation.InjectBundleContext;
 
 /**
  * Common class for all Device Abstraction Layer function TCs. It contains some
  * helper methods.
  */
-public abstract class AbstractFunctionTest extends DefaultTestBundleControl {
+public abstract class AbstractFunctionTest {
+
+	@InjectBundleContext
+	BundleContext		context;
 
 	/**
 	 * The manual test steps are sent to the test step proxy.
@@ -50,21 +58,19 @@ public abstract class AbstractFunctionTest extends DefaultTestBundleControl {
 	/**
 	 * Initializes the test step proxy.
 	 * 
-	 * @see org.osgi.test.support.compatibility.DefaultTestBundleControl#setUp()
 	 */
-	protected void setUp() throws Exception { // NOPMD
-		super.setUp();
-		this.testStepProxy = new TestStepDeviceProxy(super.getContext());
+	@BeforeEach
+	public void setUp() throws Exception { // NOPMD
+		this.testStepProxy = new TestStepDeviceProxy(this.context);
 	}
 
 	/**
 	 * Closes the test step proxy.
 	 * 
-	 * @see org.osgi.test.support.compatibility.DefaultTestBundleControl#tearDown()
 	 */
-	protected void tearDown() throws Exception { // NOPMD
+	@AfterEach
+	public void tearDown() throws Exception { // NOPMD
 		this.testStepProxy.close();
-		super.tearDown();
 	}
 
 	/**
@@ -76,20 +82,18 @@ public abstract class AbstractFunctionTest extends DefaultTestBundleControl {
 	 * @return The functions according to the specified arguments.
 	 */
 	protected Function[] getFunctions(String functionClassName) {
-		BundleContext bc = super.getContext();
+		BundleContext bc = this.context;
 		ServiceReference< ? >[] functionSRefs = null;
 		try {
 			functionSRefs = bc.getServiceReferences(functionClassName, null);
 		} catch (InvalidSyntaxException e) {
 			// not possible, the filter is not used
 		}
-		assertNotNull("At least one function is expected of: " + functionClassName, functionSRefs);
+		assertThat(functionSRefs).as("At least one function is expected of: " + functionClassName).isNotNull();
 		Function[] functions = new Function[functionSRefs.length];
 		for (int i = 0; i < functions.length; i++) {
 			functions[i] = (Function) bc.getService(functionSRefs[i]);
-			assertNotNull(
-					"The function service is missing with UID: " + functionSRefs[i].getProperty(Device.SERVICE_UID),
-					functions[i]);
+			assertThat(functions[i]).as("The function service is missing with UID: " + functionSRefs[i].getProperty(Device.SERVICE_UID)).isNotNull();
 		}
 		return functions;
 	}
@@ -102,10 +106,9 @@ public abstract class AbstractFunctionTest extends DefaultTestBundleControl {
 	 * @param actualData Actual value.
 	 */
 	protected void assertEquals(boolean expectedValue, BooleanData actualData) {
-		assertNotNull("The boolean data is missing!", actualData);
-		assertEquals("The boolean value is not correct!", expectedValue, actualData.getValue());
-		assertTrue("The boolean data timestamp is not correct!",
-				System.currentTimeMillis() >= actualData.getTimestamp());
+		assertThat(actualData).as("The boolean data is missing!").isNotNull();
+		assertThat(actualData.getValue()).as("The boolean value is not correct!").isEqualTo(expectedValue);
+		assertThat(System.currentTimeMillis() >= actualData.getTimestamp()).as("The boolean data timestamp is not correct!").isTrue();
 	}
 
 	/**
@@ -118,10 +121,9 @@ public abstract class AbstractFunctionTest extends DefaultTestBundleControl {
 	 * @param actualData The actual value.
 	 */
 	protected void assertEquals(PropertyMetadata expectedMetadata, BigDecimal expectedValue, LevelData actualData) {
-		assertNotNull("The level data is missing!", actualData);
-		assertEquals("The level value is not correct!", expectedValue, actualData.getLevel());
-		assertTrue("The level data timestamp is not correct!",
-				System.currentTimeMillis() >= actualData.getTimestamp());
+		assertThat(actualData).as("The level data is missing!").isNotNull();
+		assertThat(actualData.getLevel()).as("The level value is not correct!").isEqualTo(expectedValue);
+		assertThat(System.currentTimeMillis() >= actualData.getTimestamp()).as("The level data timestamp is not correct!").isTrue();
 		String valueUnit = actualData.getUnit();
 		if ((null == expectedMetadata) || (null == valueUnit)) {
 			return;
@@ -152,16 +154,10 @@ public abstract class AbstractFunctionTest extends DefaultTestBundleControl {
 	protected void assertFunctionDataFields(long timestamp,
 			Map<String, ? > metadata, FunctionData actualData) {
 		// time stamp
-		assertEquals(
-				"The timestamp is not correct!",
-				timestamp,
-				actualData.getTimestamp());
+		assertThat(actualData.getTimestamp()).as("The timestamp is not correct!").isEqualTo(timestamp);
 
 		// metadata
-		assertEquals(
-				"The metadata is not correct!",
-				metadata,
-				actualData.getMetadata());
+		assertThat(actualData.getMetadata()).as("The metadata is not correct!").isEqualTo(metadata);
 	}
 
 	/**
@@ -176,7 +172,7 @@ public abstract class AbstractFunctionTest extends DefaultTestBundleControl {
 		Function[] functions = getFunctions(
 				functionClassName, PropertyMetadata.ACCESS_EVENTABLE);
 		String functionUID = (String) functions[0].getServiceProperty(Function.SERVICE_UID);
-		FunctionEventHandler eventHandler = new FunctionEventHandler(super.getContext());
+		FunctionEventHandler eventHandler = new FunctionEventHandler(this.context);
 		eventHandler.register(functionUID, propName);
 		FunctionEvent functionEvent;
 		try {
@@ -185,15 +181,9 @@ public abstract class AbstractFunctionTest extends DefaultTestBundleControl {
 		} finally {
 			eventHandler.unregister();
 		}
-		assertNotNull("No data in the alarm event.", functionEvent.getFunctionPropertyValue());
-		assertEquals(
-				"The event function identifier is not correct!",
-				functionUID,
-				functionEvent.getFunctionUID());
-		assertEquals(
-				"The property name is not correct!",
-				propName,
-				functionEvent.getFunctionPropertyName());
+		assertThat(functionEvent.getFunctionPropertyValue()).as("No data in the alarm event.").isNotNull();
+		assertThat(functionEvent.getFunctionUID()).as("The event function identifier is not correct!").isEqualTo(functionUID);
+		assertThat(functionEvent.getFunctionPropertyName()).as("The property name is not correct!").isEqualTo(propName);
 	}
 
 	/**
@@ -209,15 +199,13 @@ public abstract class AbstractFunctionTest extends DefaultTestBundleControl {
 	 */
 	protected Function[] getFunctions(String functionClass, int propertyAccess) {
 		try {
-			ServiceReference< ? >[] functionSRefs = super.getContext()
+			ServiceReference< ? >[] functionSRefs = this.context
 					.getServiceReferences(
 					functionClass, '(' + Function.SERVICE_PROPERTY_NAMES + "=*)");
-			assertNotNull(
-					"There are no functions of type: " + functionClass + " and property access: " + propertyAccess,
-					functionSRefs);
+			assertThat(functionSRefs).as("There are no functions of type: " + functionClass + " and property access: " + propertyAccess).isNotNull();
 			List<Function> result = new ArrayList<>(functionSRefs.length);
 			for (int i = 0; i < functionSRefs.length; i++) {
-				Function function = (Function) super.getContext().getService(functionSRefs[i]);
+				Function function = (Function) this.context.getService(functionSRefs[i]);
 				if (null == function) {
 					continue;
 				}
@@ -230,9 +218,7 @@ public abstract class AbstractFunctionTest extends DefaultTestBundleControl {
 					}
 				}
 			}
-			assertFalse(
-					"There is no function, which contains a proeprty with an access: " + propertyAccess,
-					result.isEmpty());
+			assertThat(result).as("There is no function, which contains a proeprty with an access: " + propertyAccess).isNotEmpty();
 			return result.toArray(new Function[0]);
 		} catch (InvalidSyntaxException e) {
 			// the filter is valid
